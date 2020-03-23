@@ -3,12 +3,13 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import qs from 'qs'
+import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 15000 // request timeout
 })
 
 // post form表单提交
@@ -67,26 +68,60 @@ service.interceptors.response.use(
           //   location.reload()
           // })
         })
-      } else {
-        Message({
-          message: res.message || 'Error',
-          type: 'error',
-          duration: 5 * 1000
-        })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
-    } else {
-      return res
     }
+    return res
   },
-  error => {
-    console.log('err' + error) // for debug
+  err => {
+    console.log('err' + err) // for debug
+    if (err && err.response) {
+      switch (err.response.status) {
+        case 400:
+          err.message = '请求错误'
+          break
+        case 401:
+          err.message = '未授权，请登录'
+          break
+        case 403:
+          err.message = '拒绝访问'
+          break
+        case 404:
+          err.message = `请求地址出错: ${err.response.config.url}`
+          break
+        case 408:
+          err.message = '请求超时'
+          break
+        case 500:
+          err.message = '服务器内部错误'
+          break
+        case 501:
+          err.message = '服务未实现'
+          break
+        case 502:
+          err.message = '网关错误'
+          break
+        case 503:
+          err.message = '服务不可用'
+          break
+        case 504:
+          err.message = '网关超时'
+          break
+        case 505:
+          err.message = 'HTTP版本不受支持'
+          break
+        default:
+          err.message = '接口异常，请联系管理员'
+      }
+    }
+    if (err.message.indexOf('timeout') > -1) {
+      err.message = '网络接口超时，请联系管理员'
+    }
     Message({
-      message: error.message,
+      message: err.message,
       type: 'error',
       duration: 5 * 1000
     })
-    return Promise.reject(error)
+    return Promise.reject(err) // 返回接口返回的错误信息
   }
 )
 

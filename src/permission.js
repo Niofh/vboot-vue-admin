@@ -34,6 +34,10 @@ router.beforeEach(async(to, from, next) => {
           // get user info
           await store.dispatch('user/getInfo')
 
+          // 获取用户的菜单和权限
+
+          // 添加到菜单到路由列表中
+
           next()
         } catch (error) {
           // remove token and go to login page to re-login

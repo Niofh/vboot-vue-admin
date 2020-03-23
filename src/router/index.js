@@ -56,6 +56,27 @@ export const constantRoutes = [
   },
 
   {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/permission',
+    name: 'System',
+    meta: { title: '系统管理', icon: 'example' },
+    children: [
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/system/permission/index'),
+        meta: { title: '用户管理', icon: 'table' }
+      }, {
+        path: 'permission',
+        name: 'Permission',
+        component: () => import('@/views/system/permission/index'),
+        meta: { title: '权限管理', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: '/example',
     component: Layout,
     redirect: '/example/table',

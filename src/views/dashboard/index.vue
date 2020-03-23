@@ -6,13 +6,24 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import { getAllPermissionApi } from '@/api/permission'
 export default {
   name: 'Dashboard',
   computed: {
     ...mapGetters([
       'name'
     ])
+  },
+  created() {
+    this.getAllPermission()
+  },
+  methods: {
+    getAllPermission() {
+      getAllPermissionApi().then(res => {
+        console.log(res)
+      })
+    }
+
   }
 }
 </script>
