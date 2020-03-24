@@ -1,7 +1,7 @@
 <template>
   <div class="app-container permission">
     <el-row>
-      <el-button type="primary" size="small">+ 添加顶部菜单</el-button>
+      <el-button type="primary" size="small" @click="dialogFormVisible=true">+ 新增菜单</el-button>
       <el-button type="danger" size="small">批量删除</el-button>
       <el-button size="small">刷新</el-button>
     </el-row>
@@ -10,11 +10,6 @@
 
       <el-row :gutter="20">
         <el-col :md="6" :sm="24">
-          <el-alert
-            title="当前选择的名称为："
-            type="warning"
-            show-icon
-          />
           <div class="tree-bar">
             <el-input
               v-model="filterText"
@@ -41,63 +36,83 @@
                     size="mini"
                     @click="() => append(node,data)"
                   >
-                    添加
+                    编辑
                   </el-button>
                 </span>
               </span>
             </el-tree>
           </div>
         </el-col>
-        <el-col :md="18" :sm="24">
-          <div class="tree-desc">
-            <el-form ref="form" :model="form" label-width="80px">
-              <el-form-item label="活动名称">
-                <el-input v-model="form.name" />
-              </el-form-item>
-              <el-form-item label="活动区域">
-                <el-select v-model="form.region" placeholder="请选择活动区域">
-                  <el-option label="区域一" value="shanghai" />
-                  <el-option label="区域二" value="beijing" />
-                </el-select>
-              </el-form-item>
-              <el-form-item label="活动时间">
-                <el-col :span="11">
-                  <el-date-picker v-model="form.date1" type="date" placeholder="选择日期" style="width: 100%;" />
-                </el-col>
-                <el-col class="line" :span="2">-</el-col>
-                <el-col :span="11">
-                  <el-time-picker v-model="form.date2" placeholder="选择时间" style="width: 100%;" />
-                </el-col>
-              </el-form-item>
-              <el-form-item label="即时配送">
-                <el-switch v-model="form.delivery" />
-              </el-form-item>
-              <el-form-item label="活动性质">
-                <el-checkbox-group v-model="form.type">
-                  <el-checkbox label="美食/餐厅线上活动" name="type" />
-                  <el-checkbox label="地推活动" name="type" />
-                  <el-checkbox label="线下主题活动" name="type" />
-                  <el-checkbox label="单纯品牌曝光" name="type" />
-                </el-checkbox-group>
-              </el-form-item>
-              <el-form-item label="特殊资源">
-                <el-radio-group v-model="form.resource">
-                  <el-radio label="线上品牌商赞助" />
-                  <el-radio label="线下场地免费" />
-                </el-radio-group>
-              </el-form-item>
-              <el-form-item label="活动形式">
-                <el-input v-model="form.desc" type="textarea" />
-              </el-form-item>
-              <el-form-item>
-                <el-button type="primary" @click="onSubmit">立即创建</el-button>
-                <el-button>取消</el-button>
-              </el-form-item>
-            </el-form>
-          </div>
-        </el-col>
+        <el-col :md="18" :sm="24" />
       </el-row>
     </div>
+
+    <el-dialog
+      :modal-append-to-body="false"
+      width="700px"
+      top="5vh"
+      :close-on-click-modal="false"
+      title="菜单/按钮"
+      :visible.sync="dialogFormVisible"
+    >
+
+      <el-form :model="form" :label-width="formLabelWidth">
+        <el-form-item label="菜单类型">
+          <el-radio-group v-model="form.type">
+            <el-radio :label="-1">顶级菜单</el-radio>
+            <el-radio :label="0">菜单</el-radio>
+            <el-radio :label="1">按钮</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item v-if="form.type===0" label="父级菜单">
+          <el-input v-model="form.parentId" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="名称">
+          <el-input v-model="form.title" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="路径">
+          <el-input v-model="form.path" autocomplete="off" />
+        </el-form-item>
+        <el-form-item v-if="form.type===1" label="按钮权限名称">
+          <el-input v-model="form.buttonType" autocomplete="off" />
+        </el-form-item>
+        <el-form-item v-if="form.type!==1" label="菜单name">
+          <el-input v-model="form.name" autocomplete="off" />
+        </el-form-item>
+        <el-form-item v-if="form.type!==1" label="菜单组件">
+          <el-input v-model="form.component" autocomplete="off" />
+        </el-form-item>
+        <el-form-item v-if="form.type!==1" label="图标">
+          <el-input v-model="form.icon" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="备注">
+          <el-input v-model="form.description" autocomplete="off" />
+        </el-form-item>
+        <el-form-item v-if="form.type===0" label="网页连接">
+          <el-input v-model="form.url" autocomplete="off" />
+        </el-form-item>
+        <el-form-item v-if="form.type!==1" label="重定向">
+          <el-input v-model="form.redirect" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="排序值">
+          <el-input-number v-model="form.sort" :min="1" :precision="1" :step="0.1" />
+        </el-form-item>
+        <el-form-item v-if="form.type!==1" label="是否显示" prop="hidden">
+          <el-radio v-model="form.hidden" :label="1">显示</el-radio>
+          <el-radio v-model="form.hidden" :label="0">不显示</el-radio>
+        </el-form-item>
+        <el-form-item v-if="form.type!==1" label="是否缓存" prop="hidden">
+          <el-radio v-model="form.nocache" :label="1">缓存</el-radio>
+          <el-radio v-model="form.nocache" :label="0">不缓存</el-radio>
+        </el-form-item>
+
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -111,20 +126,28 @@ export default {
     return {
       form: {
         name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        hidden: 1,
+        title: '',
+        path: '',
+        component: '',
+        icon: '',
+        buttonType: '',
+        parentId: '',
+        description: '',
+        sort: '',
+        url: '',
+        redirect: '',
+        nocache: 0,
+        type: 0
       },
       filterText: '',
       data: [],
       defaultProps: {
         children: 'children',
         label: 'title'
-      }
+      },
+      dialogFormVisible: false,
+      formLabelWidth: '120px'
     }
   },
   computed: {

@@ -50,7 +50,7 @@ const actions = {
         const { result } = response
 
         if (!result) {
-          reject('Verification failed, please Login again.')
+          reject('验证失败，请重新登录')
         }
 
         const { username, avatar } = result
