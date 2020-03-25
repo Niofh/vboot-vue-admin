@@ -3,7 +3,7 @@
     <el-row>
       <el-button type="primary" size="small" @click="openMenuModal(1)">+ 新增菜单</el-button>
       <el-button type="danger" size="small" @click="handleDelByIds">批量删除</el-button>
-      <el-button size="small">刷新</el-button>
+      <el-button size="small" @click="getAllPermission">刷新</el-button>
     </el-row>
 
     <div class="tree-content">

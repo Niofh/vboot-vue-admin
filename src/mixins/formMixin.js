@@ -34,7 +34,6 @@ const formMixin = {
     },
     // 关闭后回调
     close(formName) {
-
       this.resetForm(formName)
       this.loading = false
     },
