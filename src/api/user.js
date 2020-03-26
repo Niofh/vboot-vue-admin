@@ -22,3 +22,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getUserByPageApi(data) {
+  return request({
+    url: '/user/getUserByPage',
+    method: 'get',
+    params: data
+  })
+}

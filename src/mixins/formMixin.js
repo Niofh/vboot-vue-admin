@@ -39,7 +39,6 @@ const formMixin = {
     },
     // 重置表单属性
     resetForm(formName) {
-      console.log(formName)
       this.$refs[formName].resetFields()
     }
   }

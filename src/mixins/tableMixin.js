@@ -3,7 +3,7 @@
 const tableMixin = {
   data() {
     return {
-      pageSizeList: [10, 20, 50, 100],
+      pageSizeList: [5, 10, 15, 20],
       page: {
         pageSize: 10,
         pageIndex: 1,

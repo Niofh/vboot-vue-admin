@@ -28,7 +28,7 @@ service.interceptors.request.use(
     }
 
     // form表单提交
-    if (config.method === 'post' && config.headers.post['Content-Type'] === 'application/x-www-form-urlencoded') {
+    if (config.method.toLocaleLowerCase() === 'post' && config.headers.post['Content-Type'] === 'application/x-www-form-urlencoded') {
       config.data = qs.stringify(config.data)
     }
     return config
