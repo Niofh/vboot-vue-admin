@@ -65,7 +65,7 @@ export const constantRoutes = [
       {
         path: 'user',
         name: 'User',
-        component: () => import('@/views/system/permission/index'),
+        component: () => import('@/views/system/user/index'),
         meta: { title: '用户管理', icon: 'table' }
       }, {
         path: 'permission',

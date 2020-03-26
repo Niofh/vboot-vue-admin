@@ -69,6 +69,11 @@ service.interceptors.response.use(
           // })
         })
       }
+      Message({
+        message: res.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
     }
     return res
   },
