@@ -31,8 +31,7 @@
     </el-form>
     <div class="btns-wrap">
       <el-button type="primary" size="small" icon="el-icon-plus">新增</el-button>
-      <el-button type="success" size="small" icon="el-icon-edit">修改</el-button>
-      <el-button type="danger" size="small" icon="el-icon-delete">删除</el-button>
+      <el-button :disabled="checkFieldList.length>0" type="danger" size="small" icon="el-icon-delete">删除</el-button>
       <el-button class="btn-default" size="small" icon="el-icon-refresh-left">刷新</el-button>
       <el-popover
         placement="right"
