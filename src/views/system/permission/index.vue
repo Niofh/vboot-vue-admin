@@ -81,7 +81,6 @@
               default-expand-all
               :data="menuData"
               :props="defaultProps"
-              :filter-node-method="filterNode"
               :current-node-key="form.parentId"
               :expand-on-click-node="false"
               :highlight-current="true"
@@ -180,13 +179,14 @@ export default {
           { required: true, message: '这是必填项', trigger: 'blur' }
         ]
       },
+      dialogFormVisible: false,
+      formLabelWidth: '120px',
       data: [],
       defaultProps: {
         children: 'children',
         label: 'title'
       },
-      dialogFormVisible: false,
-      formLabelWidth: '120px',
+
       TYPE: {
         'SUPER_MENU': -1,
         'MENU': 0,
@@ -305,6 +305,7 @@ export default {
     },
     permissionSaveBase() {
       const form = this._submit()
+      this.loading = true
       permissionSaveBaseApi(form).then(res => {
         if (res.code === this.$code) {
           // 添加成功
