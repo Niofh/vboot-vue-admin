@@ -486,7 +486,7 @@ export default {
     // 删除
     userDelByIds(id) {
       let ids = this.multipleSelection.toString()
-      if (id) {
+      if (ids.length === 0) {
         ids = id
       }
       this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
