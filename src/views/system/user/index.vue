@@ -5,7 +5,7 @@
         <el-input v-model="searchForm.username" clearable placeholder="用户名" />
       </el-form-item>
       <el-form-item label="昵称" prop="nickName">
-        <el-input v-model="searchForm.nickName" clearable placeholder="用户名" />
+        <el-input v-model="searchForm.nickName" clearable placeholder="昵称" />
       </el-form-item>
       <el-form-item label="用户状态" prop="status">
         <el-select v-model="searchForm.status" placeholder="用户状态">
@@ -401,12 +401,11 @@ export default {
     this.getAllDepartment()
   },
   methods: {
-    onSubmit() {
-      console.log('submit!')
-    },
+    // 判断是否存在排版里面
     showField(name) {
       return this.checkFieldList.indexOf(name) > -1
     },
+    // 全选
     handleSelectionChange(tableItem) {
       this.multipleSelection = tableItem.map(item => item.id)
     },

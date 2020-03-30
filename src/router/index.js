@@ -72,6 +72,12 @@ export const constantRoutes = [
         name: 'Permission',
         component: () => import('@/views/system/permission/index'),
         meta: { title: '权限管理', icon: 'table' }
+      },
+      {
+        path: 'codeRender',
+        name: 'CodeRender',
+        component: () => import('@/views/system/codeRender/index'),
+        meta: { title: '代码生成', icon: 'table' }
       }
     ]
   },
