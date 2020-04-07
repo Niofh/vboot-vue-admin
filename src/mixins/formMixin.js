@@ -38,8 +38,12 @@ const formMixin = {
       this.loading = false
     },
     // 重置表单属性
-    resetForm(formName) {
+    resetForm(formName, form = 'form') {
       this.$refs[formName].resetFields()
+      // 清空表单数据
+      for (const key in this[form]) {
+        this[form][key] = ''
+      }
     }
   }
 }

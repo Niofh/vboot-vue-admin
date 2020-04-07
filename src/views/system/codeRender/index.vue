@@ -130,6 +130,7 @@ export default {
       checkFieldList: [], // 选中的字段
       multipleSelection: [],
       form: {
+        id: '',
         tableName: '',
         description: ''
       },
@@ -186,12 +187,7 @@ export default {
     },
     // 修改弹出框
     openEditModal(tableItem) {
-      getCodeById(tableItem.id).then(res => {
-        if (res.code === this.$code) {
-          this.form = res.result
-        }
-      })
-      // this.form = JSON.parse(JSON.stringify(tableItem))
+      this.form = { ...tableItem }
       this.openModal(CommonEnum.UPDATE.id)
     },
     // 添加用户
