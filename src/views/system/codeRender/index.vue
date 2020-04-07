@@ -16,7 +16,7 @@
         type="danger"
         size="small"
         icon="el-icon-delete"
-        @click="userDelByIds"
+        @click="delByIds"
       >删除
       </el-button>
       <el-button class="btn-default" size="small" icon="el-icon-refresh-left" @click="handleRefresh">刷新</el-button>
@@ -60,7 +60,7 @@
       >
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="openEditModal(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="userDelByIds(scope.row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="delByIds(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,7 +94,7 @@
         <el-row :gutter="5">
           <el-col :span="12">
             <el-form-item label="表名" prop="tableName">
-              <el-input v-model="form.tableName" :disabled="dialogType===CommonEnum.UPDATE.id" autocomplete="off" />
+              <el-input v-model="form.tableName" autocomplete="off" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -117,8 +117,8 @@
 <script>
 import tableMixin from '@/mixins/tableMixin'
 import formMixin from '@/mixins/formMixin'
-import { getUserById, getUserByPageApi, userDelByIdsApi, userSaveBaseApi, userUpdateBaseApi } from '@/api/user'
 import CommonEnum from '@/enum/CommonEnum'
+import { codeDelByIdsApi, codeSaveBaseApi, codeUpdateBaseApi, getCodeById, getCodeByPageApi } from '@/api/code'
 export default {
   name: 'CodeRender',
   mixins: [tableMixin, formMixin],
@@ -152,6 +152,9 @@ export default {
       }
     }
   },
+  created() {
+    this.getDataList()
+  },
   methods: {
     // 全选
     handleSelectionChange(tableItem) {
@@ -165,9 +168,9 @@ export default {
     // 分页
     getDataList() {
       this.dataListLoading = true
-      const params = { ...this.page, ...this.searchForm, ...{ a: 1 }}
+      const params = { ...this.page, ...this.searchForm }
       delete params.date
-      getUserByPageApi(params).then(res => {
+      getCodeByPageApi(params).then(res => {
         this.dataListLoading = false
         if (res.code === this.$code) {
           this.dataList = res.result.records
@@ -183,31 +186,18 @@ export default {
     },
     // 修改弹出框
     openEditModal(tableItem) {
-      console.log()
-      getUserById(tableItem.id).then(res => {
+      getCodeById(tableItem.id).then(res => {
         if (res.code === this.$code) {
           this.form = res.result
-          this.form.password = ''
-          if (this.form.departmentId) {
-            // 设置部门名称
-            let title
-            for (let i = 0; i < this.depList.length; i++) {
-              const item = this.depList[i]
-              if (item.id === this.form.departmentId) {
-                title = item.title
-                break
-              }
-            }
-            this.$set(this.form, 'departmentTitle', title)
-          }
         }
       })
+      // this.form = JSON.parse(JSON.stringify(tableItem))
       this.openModal(CommonEnum.UPDATE.id)
     },
     // 添加用户
-    userSaveBase() {
+    saveBase() {
       this.loading = true
-      userSaveBaseApi(this.form).then(res => {
+      codeSaveBaseApi(this.form).then(res => {
         if (res.code === this.$code) {
           this.getDataList()
           this.closeModal()
@@ -218,9 +208,9 @@ export default {
       })
     },
     // 更新用户
-    userUpdateBase() {
+    updateBase() {
       this.loading = true
-      userUpdateBaseApi(this.form).then(res => {
+      codeUpdateBaseApi(this.form).then(res => {
         if (res.code === this.$code) {
           this.getDataList()
           this.closeModal()
@@ -231,7 +221,7 @@ export default {
       })
     },
     // 删除
-    userDelByIds(id) {
+    delByIds(id) {
       let ids = this.multipleSelection.toString()
       if (ids.length === 0) {
         ids = id
@@ -241,7 +231,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        userDelByIdsApi({
+        codeDelByIdsApi({
           ids: ids
         }).then(res => {
           if (res.code === this.$code) {
@@ -264,9 +254,9 @@ export default {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           if (this.dialogType === CommonEnum.ADD.id) {
-            this.userSaveBase()
+            this.saveBase()
           } else {
-            this.userUpdateBase()
+            this.updateBase()
           }
         } else {
           console.log('error submit!!')
