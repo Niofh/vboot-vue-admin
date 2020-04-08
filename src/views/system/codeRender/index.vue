@@ -36,9 +36,20 @@
         width="55"
       />
       <el-table-column
+        prop="name"
+        label="文件名"
+        width="180"
+        sortable
+      />
+      <el-table-column
         prop="tableName"
         label="表名"
         width="180"
+        sortable
+      />
+      <el-table-column
+        prop="packageName"
+        label="包名"
         sortable
       />
       <el-table-column
@@ -93,8 +104,18 @@
 
         <el-row :gutter="5">
           <el-col :span="12">
+            <el-form-item label="文件名称" prop="name">
+              <el-input v-model="form.name" autocomplete="off" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="表名" prop="tableName">
               <el-input v-model="form.tableName" autocomplete="off" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="包名" prop="packageName">
+              <el-input v-model="form.packageName" type="textarea" autocomplete="off" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -131,10 +152,18 @@ export default {
       multipleSelection: [],
       form: {
         id: '',
+        name: '',
         tableName: '',
-        description: ''
+        description: '',
+        packageName: ''
       },
       rules: {
+        name: [
+          { required: true, message: '这是必填项', trigger: 'blur' }
+        ],
+        packageName: [
+          { required: true, message: '这是必填项', trigger: 'blur' }
+        ],
         tableName: [
           { required: true, message: '这是必填项', trigger: 'blur' }
         ],
