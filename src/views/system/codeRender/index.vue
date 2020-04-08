@@ -97,7 +97,7 @@
       :close-on-click-modal="false"
       :title="dialogTitle+'数据库表'"
       :visible.sync="dialogFormVisible"
-      @closed="resetForm('ruleForm')"
+      @closed="handleClosed"
     >
 
       <el-form ref="ruleForm" :model="form" :rules="rules" :label-width="formLabelWidth" size="small">
@@ -207,6 +207,14 @@ export default {
           this.page.total = res.result.total
         }
       })
+    },
+    // 关闭窗口
+    handleClosed() {
+      this.resetForm('ruleForm')
+      // 清空表单数据
+      for (const key in this.form) {
+        this.form[key] = ''
+      }
     },
     // 打开弹出框
     openModal(type) {

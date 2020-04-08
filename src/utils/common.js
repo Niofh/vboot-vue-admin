@@ -16,7 +16,7 @@ const commonUtil = {
    * @returns {*[]|*}
    */
   getStartAndTime(dateList) {
-    if (dateList && dateList.length > 0) {
+    if (dateList && dateList.length > 1) {
       return [dateList[0] + ' 00:00:00', dateList[1] + ' 23:59:59']
     } else {
       return ['', '']

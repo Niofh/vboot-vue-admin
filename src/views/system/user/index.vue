@@ -391,7 +391,9 @@ export default {
   },
   watch: {
     'searchForm.date'(val) {
+      console.log(val, '============')
       const startAndTime = commonUtil.getStartAndTime(val)
+      console.log('startAndTime', startAndTime)
       this.searchForm.createDate = startAndTime[0]
       this.searchForm.endDate = startAndTime[1]
     }
@@ -411,13 +413,16 @@ export default {
     },
     // 重置表单
     handleResetFrom() {
+      this.searchForm.createDate = ''
+      this.searchForm.endDate = ''
       this.resetForm('searchForm')
       this.handleReset()
+
     },
     // 分页
     getDataList() {
       this.dataListLoading = true
-      const params = { ...this.page, ...this.searchForm, ...{ a: 1 }}
+      const params = { ...this.page, ...this.searchForm }
       delete params.date
       getUserByPageApi(params).then(res => {
         this.dataListLoading = false
