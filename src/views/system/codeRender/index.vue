@@ -70,6 +70,7 @@
         width="150"
       >
         <template slot-scope="scope">
+          <el-button type="text" size="small" @click="handleAttrEdit(scope.row)">属性编辑</el-button>
           <el-button type="text" size="small" @click="openEditModal(scope.row)">编辑</el-button>
           <el-button type="text" size="small" @click="delByIds(scope.row.id)">删除</el-button>
         </template>
@@ -139,7 +140,7 @@
 import tableMixin from '@/mixins/tableMixin'
 import formMixin from '@/mixins/formMixin'
 import CommonEnum from '@/enum/CommonEnum'
-import { codeDelByIdsApi, codeSaveBaseApi, codeUpdateBaseApi, getCodeById, getCodeByPageApi } from '@/api/code'
+import { codeDelByIdsApi, codeSaveBaseApi, codeUpdateBaseApi, getCodeByPageApi } from '@/api/code'
 export default {
   name: 'CodeRender',
   mixins: [tableMixin, formMixin],
@@ -296,6 +297,9 @@ export default {
           return false
         }
       })
+    },
+    handleAttrEdit(item) {
+      this.$router.push({ name: 'CodeAttr', params: { codeId: item.id }})
     }
   }
 }
