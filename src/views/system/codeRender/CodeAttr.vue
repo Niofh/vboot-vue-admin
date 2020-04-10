@@ -1,5 +1,5 @@
 <template>
-  <div class="code-attr app-container">
+  <div class="code-detail app-container">
     <el-page-header content="代码属性配置" @back="goBack" />
 
     <div class="btns-wrap">
@@ -13,7 +13,6 @@
         @click="delByIds"
       >删除
       </el-button>
-      <el-button size="small" type="success">重新生成文件</el-button>
 
     </div>
     <el-alert
@@ -92,7 +91,7 @@
       <el-table-column
         prop="tableSite"
         label="显示表格中"
-        width="110"
+        width="80"
         align="center"
       >
         <template slot-scope="scope">
@@ -102,22 +101,26 @@
       <el-table-column
         prop="search"
         label="查询方式"
-        width="180"
+        width="130"
         align="center"
       >
         <template slot-scope="scope">
-          <el-select v-model="scope.row.search" :disabled="!scope.row.isEdit" size="mini" />
+          <el-select v-model="scope.row.search" :disabled="!scope.row.isEdit" size="mini">
+            <el-option v-for="search in searchEnumList" :key="search.id" :value="search.id" :label="search.value" />
+          </el-select>
         </template>
       </el-table-column>
 
       <el-table-column
         prop="formType"
         label="表单类型"
-        width="180"
+        width="130"
         align="center"
       >
         <template slot-scope="scope">
-          <el-select v-model="scope.row.formType" :disabled="!scope.row.isEdit" size="mini" />
+          <el-select v-model="scope.row.formType" :disabled="!scope.row.isEdit" size="mini">
+            <el-option v-for="form in formEnumList" :key="form.id" :value="form.id" :label="form.value" />
+          </el-select>
         </template>
       </el-table-column>
       <el-table-column
@@ -170,7 +173,10 @@
 
 <script>
 import tableMixin from '@/mixins/tableMixin'
-import { codeDetailDelByIdsApi, getCodeDetailAll } from '@/api/codeDetail'
+import { codeDetailDelByIdsApi, codeDetailSaveBaseApi, codeDetailUpdateBaseApi, getCodeDetailAll } from '@/api/codeDetail'
+import { getArray } from '@/enum/EnumBase'
+import FormEnum from '@/enum/FormEnum'
+import SqlEnum from '@/enum/SqlEnum'
 
 export default {
   name: 'CodeAttr',
@@ -179,7 +185,9 @@ export default {
     return {
       codeId: this.$route.params.codeId,
       multipleSelection: [],
-      dataList: []
+      dataList: [],
+      formEnumList: getArray(FormEnum),
+      searchEnumList: getArray(SqlEnum)
     }
   },
   created() {
@@ -221,10 +229,31 @@ export default {
       this.dataList.unshift(item)
     },
     handleSave(item) {
-      item.isEdit = !item.isEdit
-      if (this.isEdit) {
+      if (item.isEdit) {
+        console.log(item)
         // 修改数据或者提交数据
+        if (item.id) {
+          // 修改数据
+          codeDetailUpdateBaseApi(item).then(res => {
+            if (res.code === this.$code) {
+              this.$message.success(res.message)
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+        } else {
+          // 添加数据
+          item.codeId = this.codeId
+          codeDetailSaveBaseApi(item).then(res => {
+            if (res.code === this.$code) {
+              this.$message.success(res.message)
+            } else {
+              this.$message.error(res.message)
+            }
+          })
+        }
       }
+      item.isEdit = !item.isEdit
     },
     // 删除多个
     delByIds() {
@@ -290,7 +319,16 @@ export default {
 }
 </script>
 
+<style lang="scss">
+  .code-detail{
+    .el-input.is-disabled .el-input__inner{
+      color:  #606266;
+    }
+  }
+</style>
+
 <style scoped lang="scss">
+
 .btns-wrap{
   margin-top: 20px;
 }

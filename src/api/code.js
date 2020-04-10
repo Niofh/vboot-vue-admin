@@ -39,3 +39,10 @@ export function codeDelByIdsApi(data) {
     data
   })
 }
+export function fileDownLoad(data) {
+  return request({
+    url: '/code/fileDownLoad',
+    method: 'get',
+    params: data
+  })
+}

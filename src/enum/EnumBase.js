@@ -20,13 +20,13 @@ class EmumBase {
  * 将枚举转换为数组
  * @returns {[]}
  */
-function getArray() {
+function getArray(object) {
   const array = []
-  for (const key in this) {
-    if (this.hasOwnProperty(key)) {
+  for (const key in object) {
+    if (object.hasOwnProperty(key)) {
       const obj = {
-        id: this[key].id,
-        value: this[key].value
+        id: object[key].id,
+        value: object[key].value
       }
       array.push(obj)
     }

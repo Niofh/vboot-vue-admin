@@ -11,6 +11,7 @@ export default {
 </script>
 
 <style lang="scss">
+  /*基础样式*/
   .btns-wrap{
     padding: 10px 0;
   }
@@ -23,5 +24,19 @@ export default {
 
   .pagination-warp{
     padding: 20px 0;
+  }
+
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+  .demonstration {
+    display: block;
+    color: #8492a6;
+    font-size: 14px;
+    margin-bottom: 20px;
   }
 </style>
