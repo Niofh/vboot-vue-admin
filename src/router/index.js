@@ -5,7 +5,6 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
-import fa from 'element-ui/src/locale/lang/fa'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -81,10 +80,17 @@ export const constantRoutes = [
         meta: { title: '代码生成', icon: 'table' }
       },
       {
-        path: 'codeAttr/:codeId',
-        name: 'CodeAttr',
-        component: () => import('@/views/system/codeRender/CodeAttr'),
+        path: 'codeDetail/:codeId',
+        name: 'CodeDetail',
+        component: () => import('@/views/system/codeRender/codeDetail'),
         meta: { title: '代码属性' },
+        hidden: true
+      },
+      {
+        path: 'codeShow/:codeId',
+        name: 'CodeShow',
+        component: () => import('@/views/system/codeRender/codeShow'),
+        meta: { title: '代码预览' },
         hidden: true
       }
     ]

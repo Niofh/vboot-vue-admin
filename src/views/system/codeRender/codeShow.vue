@@ -1,0 +1,68 @@
+<template>
+  <div class="app-container">
+    <el-page-header content="预览代码" @back="goBack" />
+    <div style="margin-top: 20px" />
+    <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="api" name="api">
+        <pre v-highlightjs="result.api"><code class="javascript" /></pre>
+      </el-tab-pane>
+      <el-tab-pane label="table.vue" name="table">
+        <pre v-highlightjs="result.table"><code class="javascript" /></pre>
+      </el-tab-pane>
+      <el-tab-pane label="entity" name="entity">
+        <pre v-highlightjs="result.entity"><code class="java" /></pre>
+      </el-tab-pane>
+      <el-tab-pane label="controller" name="controller">
+        <pre v-highlightjs="result.controller"><code class="java" /></pre>
+      </el-tab-pane>
+      <el-tab-pane label="service" name="service">
+        <pre v-highlightjs="result.service"><code class="java" /></pre>
+      </el-tab-pane>
+      <el-tab-pane label="serviceImpl" name="serviceImpl">
+        <pre v-highlightjs="result.serviceImpl"><code class="java" /></pre>
+      </el-tab-pane>
+      <el-tab-pane label="mapper" name="mapper">
+        <pre v-highlightjs="result.mapper"><code class="java" /></pre>
+      </el-tab-pane>
+      <el-tab-pane label="mysql" name="mysql">
+        <pre v-highlightjs="result.mysql"><code class="sql" /></pre>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
+</template>
+
+<script>
+import { showCode } from '@/api/code'
+
+export default {
+  name: 'CodeShow',
+  data() {
+    return {
+      activeName: 'api',
+      result: {}
+    }
+  },
+  mounted() {
+    this.getCode()
+  },
+  methods: {
+    goBack() {
+      this.$router.back()
+    },
+    handleClick(tab, event) {
+      console.log(tab, event)
+    },
+    getCode() {
+      showCode({ id: this.$route.params.codeId }).then(res => {
+        if (res.code === this.$code) {
+          this.result = res.result
+        }
+      })
+    }
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

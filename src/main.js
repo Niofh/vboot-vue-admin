@@ -14,6 +14,10 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import VueHighlightJS from 'vue-highlightjs'
+import 'highlight.js/styles/atelier-cave-light.css'
+
+Vue.use(VueHighlightJS)
 Vue.use(ElementUI)
 Vue.prototype.$code = 200
 

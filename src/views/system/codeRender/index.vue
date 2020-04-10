@@ -78,9 +78,9 @@
               更多操作<i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item><span @click="handleAttrEdit(scope.row)">预览代码</span></el-dropdown-item>
-              <el-dropdown-item><span @click="handleDownLoadCode(scope.row)">下载代码</span></el-dropdown-item>
-              <el-dropdown-item><span @click="handleAttrEdit(scope.row)">属性编辑</span></el-dropdown-item>
+              <el-dropdown-item><div @click="handleCodeShow(scope.row)">预览代码</div></el-dropdown-item>
+              <el-dropdown-item><div @click="handleDownLoadCode(scope.row)">下载代码</div></el-dropdown-item>
+              <el-dropdown-item><div @click="handleAttrEdit(scope.row)">属性编辑</div></el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>
@@ -150,7 +150,7 @@
 import tableMixin from '@/mixins/tableMixin'
 import formMixin from '@/mixins/formMixin'
 import CommonEnum from '@/enum/CommonEnum'
-import { codeDelByIdsApi, codeSaveBaseApi, codeUpdateBaseApi, fileDownLoad, getCodeByPageApi } from '@/api/code'
+import { codeDelByIdsApi, codeSaveBaseApi, codeUpdateBaseApi, getCodeByPageApi } from '@/api/code'
 export default {
   name: 'CodeRender',
   mixins: [tableMixin, formMixin],
@@ -309,11 +309,14 @@ export default {
       })
     },
     handleAttrEdit(item) {
-      this.$router.push({ name: 'CodeAttr', params: { codeId: item.id }})
+      this.$router.push({ name: 'CodeDetail', params: { codeId: item.id }})
     },
     handleDownLoadCode(item) {
       const path = process.env.VUE_APP_BASE_API + '/code/fileDownLoad?id=' + item.id
       window.location.href = path
+    },
+    handleCodeShow(item) {
+      this.$router.push({ name: 'CodeShow', params: { codeId: item.id }})
     }
   }
 }
