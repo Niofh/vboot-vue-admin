@@ -16,7 +16,7 @@
 
     </div>
     <el-alert
-      title="t_test表"
+      :title="name+'属性配置'"
       type="success"
     />
     <el-table
@@ -173,7 +173,12 @@
 
 <script>
 import tableMixin from '@/mixins/tableMixin'
-import { codeDetailDelByIdsApi, codeDetailSaveBaseApi, codeDetailUpdateBaseApi, getCodeDetailAll } from '@/api/codeDetail'
+import {
+  codeDetailDelByIdsApi,
+  codeDetailSaveBaseApi,
+  codeDetailUpdateBaseApi,
+  getAllBaseByCodeId
+} from '@/api/codeDetail'
 import { getArray } from '@/enum/EnumBase'
 import FormEnum from '@/enum/FormEnum'
 import SqlEnum from '@/enum/SqlEnum'
@@ -184,6 +189,7 @@ export default {
   data() {
     return {
       codeId: this.$route.params.codeId,
+      name: this.$route.query.name,
       multipleSelection: [],
       dataList: [],
       formEnumList: getArray(FormEnum),
@@ -198,7 +204,7 @@ export default {
       this.$router.back()
     },
     getDataList() {
-      getCodeDetailAll().then(res => {
+      getAllBaseByCodeId({ codeId: this.codeId }).then(res => {
         if (res.code === this.$code) {
           this.dataList = res.result.map(item => {
             item.isEdit = false
@@ -247,6 +253,7 @@ export default {
           codeDetailSaveBaseApi(item).then(res => {
             if (res.code === this.$code) {
               this.$message.success(res.message)
+              this.getDataList()
             } else {
               this.$message.error(res.message)
             }

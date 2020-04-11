@@ -307,14 +307,14 @@ export default {
       })
     },
     handleAttrEdit(item) {
-      this.$router.push({ name: 'CodeDetail', params: { codeId: item.id }})
+      this.$router.push({ name: 'CodeDetail', params: { codeId: item.id }, query: { name: item.name }})
     },
     handleDownLoadCode(item) {
       const path = process.env.VUE_APP_BASE_API + '/code/fileDownLoad?id=' + item.id
       window.location.href = path
     },
     handleCodeShow(item) {
-      this.$router.push({ name: 'CodeShow', params: { codeId: item.id }})
+      this.$router.push({ name: 'CodeShow', params: { codeId: item.id }, query: { name: item.name }})
     }
   }
 }

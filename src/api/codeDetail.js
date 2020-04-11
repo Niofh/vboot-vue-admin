@@ -9,6 +9,14 @@ export function getCodeDetailByPageApi(data) {
   })
 }
 
+export function getAllBaseByCodeId(data) {
+  return request({
+    url: '/codeDetail/getAllBaseByCodeId',
+    method: 'get',
+    params: data
+  })
+}
+
 export function getCodeDetailAll(data) {
   return request({
     url: '/codeDetail/getAllBase',
