@@ -15,7 +15,7 @@ import '@/icons' // icon
 import '@/permission' // permission control
 
 import VueHighlightJS from 'vue-highlightjs'
-import 'highlight.js/styles/atelier-cave-light.css'
+import 'highlight.js/styles/atelier-estuary-dark.css'
 
 Vue.use(VueHighlightJS)
 Vue.use(ElementUI)

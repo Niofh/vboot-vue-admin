@@ -238,7 +238,6 @@ export default {
       this.form = { ...tableItem }
       this.openModal(CommonEnum.UPDATE.id)
     },
-    // 添加用户
     saveBase() {
       this.loading = true
       codeSaveBaseApi(this.form).then(res => {
@@ -251,7 +250,6 @@ export default {
         this.loading = false
       })
     },
-    // 更新用户
     updateBase() {
       this.loading = true
       codeUpdateBaseApi(this.form).then(res => {
