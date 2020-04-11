@@ -1,7 +1,11 @@
 <template>
   <div class="app-container">
     <el-page-header content="预览代码" @back="goBack" />
-    <div style="margin-top: 20px" />
+    <div class="btns-wrap">
+      <el-button type="primary" size="small">复制代码</el-button>
+
+      <el-button class="btn-default" size="small" icon="el-icon-refresh-left" @click="handleRefresh">刷新</el-button>
+    </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="api" name="api">
         <pre v-highlightjs="result.api"><code class="javascript" /></pre>
@@ -42,7 +46,7 @@ export default {
       result: {}
     }
   },
-  mounted() {
+  created() {
     this.getCode()
   },
   methods: {
@@ -58,6 +62,9 @@ export default {
           this.result = res.result
         }
       })
+    },
+    handleRefresh() {
+      this.getCode()
     }
   }
 }
