@@ -4,7 +4,10 @@ export function login(data) {
   return request({
     url: '/security/vboot/login',
     method: 'post',
-    data
+    data,
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
   })
 }
 
