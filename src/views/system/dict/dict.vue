@@ -1,115 +1,120 @@
 <template>
   <div class="app-container user">
-    <el-form ref="searchForm" :inline="true" :model="searchForm" class="demo-form-inline" size="small">
-      <el-form-item label="字典名称" prop="dicName">
-        <el-input v-model="searchForm.dicName" clearable placeholder="字典名称" />
-      </el-form-item>
-      <el-form-item label="创建时间" prop="date">
-        <el-date-picker
-          v-model="searchForm.date"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          format="yyyy-MM-dd"
-          value-format="yyyy-MM-dd"
-        />
-      </el-form-item>
-      <el-form-item>
-        <el-button icon="el-icon-search" type="primary" @click="handleSearch">查询</el-button>
-        <el-button icon="el-icon-refresh-right" type="success" @click="handleResetFrom">重置</el-button>
-      </el-form-item>
-    </el-form>
-    <div class="btns-wrap">
-      <el-button type="primary" size="small" icon="el-icon-plus" @click="openModal(CommonEnum.ADD.id)">新增</el-button>
-      <el-button
-        :disabled="multipleSelection.length===0"
-        type="danger"
-        size="small"
-        icon="el-icon-delete"
-        @click="delDictByIds"
-      >删除
-      </el-button>
-      <el-button class="btn-default" size="small" icon="el-icon-refresh-left" @click="handleRefresh">刷新</el-button>
-      <el-popover
-        placement="right"
-        trigger="click"
-      >
-        <!--排版-->
-        <el-checkbox-group v-model="checkFieldList">
-          <p>
-            <el-checkbox label="dicName" checked>字典名称</el-checkbox>
-          </p>
-          <p>
-            <el-checkbox label="dicKey" checked>字典Key</el-checkbox>
-          </p>
-          <p>
-            <el-checkbox label="createTime" checked>创建时间</el-checkbox>
-          </p>
-        </el-checkbox-group>
-        <el-button slot="reference" class="btn-default" size="small" icon="el-icon-edit">排版</el-button>
-      </el-popover>
 
-    </div>
-    <el-table
-      ref="table"
-      v-loading="dataListLoading"
-      :data="dataList"
-      max-height="650"
-      stripe
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column
-        type="selection"
-        width="55"
-      />
-      <el-table-column
-        v-if="showField('dicName')"
-        prop="dicName"
-        label="字典名称"
-        width="150"
-        sortable
-      />
-      <el-table-column
-        v-if="showField('dicKey')"
-        prop="dicKey"
-        label="字典Key"
-        width="150"
-        sortable
-      />
-      <el-table-column
-        v-if="showField('createTime')"
-        prop="createTime"
-        label="创建时间"
-        min-width="180"
-        sortable
-      />
-      <el-table-column
-        fixed="right"
-        label="操作"
-        width="150"
-      >
-        <template slot-scope="scope">
-          <el-button type="text" size="small" @click="openEditModal(scope.row)">编辑</el-button>
-          <el-button type="text" size="small" @click="delDictByIds(scope.row.id)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
+    <el-row :gutter="10">
+      <el-col :sm="24" :md="10">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>字典列表</span>
+          </div>
+          <el-form ref="searchForm" :inline="true" :model="searchForm" class="demo-form-inline" size="small">
+            <el-form-item label="字典名称" prop="dicName">
+              <el-input v-model="searchForm.dicName" clearable placeholder="字典名称" />
+            </el-form-item>
+            <el-form-item label="创建时间" prop="date">
+              <el-date-picker
+                v-model="searchForm.date"
+                type="daterange"
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
+              />
+            </el-form-item>
+            <el-form-item>
+              <el-button icon="el-icon-search" type="primary" @click="handleSearch">查询</el-button>
+              <el-button icon="el-icon-refresh-right" type="success" @click="handleResetFrom">重置</el-button>
+            </el-form-item>
+          </el-form>
+          <div class="btns-wrap">
+            <el-button type="primary" size="small" icon="el-icon-plus" @click="openModal(CommonEnum.ADD.id)">新增</el-button>
+            <el-button
+              :disabled="multipleSelection.length===0"
+              type="danger"
+              size="small"
+              icon="el-icon-delete"
+              @click="delDictByIds"
+            >删除
+            </el-button>
+            <el-button class="btn-default" size="small" icon="el-icon-refresh-left" @click="handleRefresh">刷新</el-button>
+            <el-popover
+              placement="right"
+              trigger="click"
+            >
+              <!--排版-->
+              <el-checkbox-group v-model="checkFieldList">
+                <p>
+                  <el-checkbox label="dicName" checked>字典名称</el-checkbox>
+                </p>
+                <p>
+                  <el-checkbox label="dicKey" checked>字典Key</el-checkbox>
+                </p>
+              </el-checkbox-group>
+              <el-button slot="reference" class="btn-default" size="small" icon="el-icon-edit">排版</el-button>
+            </el-popover>
 
-    <div class="pagination-warp">
-      <el-pagination
-        background
-        layout="total ,sizes, prev, pager, next, jumper"
-        :current-page="page.pageIndex"
-        :page-size="page.pageSize"
-        :total="page.total"
-        :page-sizes="pageSizeList"
-        style="float:right;"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
-    </div>
+          </div>
+          <el-table
+            ref="table"
+            v-loading="dataListLoading"
+            :data="dataList"
+            max-height="650"
+            stripe
+            style="width: 100%"
+            @selection-change="handleSelectionChange"
+          >
+            <el-table-column
+              type="selection"
+              width="55"
+            />
+            <el-table-column
+              v-if="showField('dicName')"
+              prop="dicName"
+              label="字典名称"
+              sortable
+            />
+            <el-table-column
+              v-if="showField('dicKey')"
+              prop="dicKey"
+              label="字典Key"
+              sortable
+            />
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="100"
+            >
+              <template slot-scope="scope">
+                <el-button type="text" size="small" @click="openEditModal(scope.row)">编辑</el-button>
+                <el-button type="text" size="small" @click="delDictByIds(scope.row.id)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="pagination-warp">
+            <el-pagination
+              background
+              layout="total ,sizes, prev, pager, next, jumper"
+              :current-page="page.pageIndex"
+              :page-size="page.pageSize"
+              :total="page.total"
+              :page-sizes="pageSizeList"
+              style="float:right;"
+              @current-change="handleCurrentChange"
+              @size-change="handleSizeChange"
+            />
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :sm="24" :md="14">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>字典详情</span>
+          </div>
+        </el-card>
+      </el-col>
+
+    </el-row>
 
     <el-dialog
       :modal-append-to-body="false"
@@ -320,5 +325,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.box-card{
+  margin-bottom: 20px;
+}
 </style>
