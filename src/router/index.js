@@ -102,7 +102,7 @@ export const constantRoutes = [
       {
         path: 'dictDetail',
         name: 'DictDetail',
-        component: () => import('@/views/system/dict/dicDetail.vue'),
+        component: () => import('@/views/system/dict/dictDetail.vue'),
         meta: { title: '字典详情', icon: 'table' }
       }
     ]

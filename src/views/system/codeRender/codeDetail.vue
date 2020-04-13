@@ -141,13 +141,13 @@
       </el-table-column>
 
       <el-table-column
-        prop="dicId"
+        prop="dictId"
         label="关联数字字典"
         align="center"
         width="180"
       >
         <template slot-scope="scope">
-          <el-select v-model="scope.row.dicId" :disabled="!scope.row.isEdit" size="mini" />
+          <el-select v-model="scope.row.dictId" :disabled="!scope.row.isEdit" size="mini" />
         </template>
       </el-table-column>
 
@@ -233,7 +233,7 @@ export default {
         tableSite: 0,
         formType: '',
         search: '',
-        dicId: '',
+        dictId: '',
         num: 1,
         isEdit: false
       }

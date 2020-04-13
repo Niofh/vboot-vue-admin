@@ -159,7 +159,7 @@ import formMixin from '@/mixins/formMixin'
 import { getDictById, dictDelByIdsApi, dictSaveBaseApi, dictUpdateBaseApi, getDictByPageApi } from '@/api/dict'
 import commonUtil from '@/utils/common'
 import CommonEnum from '@/enum/CommonEnum'
-import DictDetail from './dicDetail'
+import DictDetail from './dictDetail'
 export default {
   name: 'Dict',
   components: {
@@ -215,6 +215,7 @@ export default {
   methods: {
     handleCellClick(row, column, cell, event) {
       this.cellClickId = row.id
+      console.log(this.cellClickId)
       this.$refs.dictDetail.getDataList()
     },
     // 判断是否存在排版里面

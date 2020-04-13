@@ -181,7 +181,7 @@ export default {
       checkFieldList: [], // 选中的字段
       multipleSelection: [],
       form: {
-        dicId: 4234234,
+        dictId: '',
         name: '',
         code: '',
         sort: ''
@@ -257,6 +257,7 @@ export default {
     // 添加
     saveDictDetailBase() {
       this.loading = true
+      this.form.dictId = this.dictId
       dictDetailSaveBaseApi(this.form).then(res => {
         if (res.code === this.$code) {
           this.getDataList()
