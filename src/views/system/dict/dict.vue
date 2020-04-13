@@ -62,7 +62,9 @@
             max-height="650"
             stripe
             style="width: 100%"
+            highlight-current-row
             @selection-change="handleSelectionChange"
+            @cell-click="handleCellClick"
           >
             <el-table-column
               type="selection"
@@ -72,13 +74,11 @@
               v-if="showField('dicName')"
               prop="dicName"
               label="字典名称"
-              sortable
             />
             <el-table-column
               v-if="showField('dicKey')"
               prop="dicKey"
               label="字典Key"
-              sortable
             />
             <el-table-column
               fixed="right"
@@ -111,6 +111,7 @@
           <div slot="header" class="clearfix">
             <span>字典详情</span>
           </div>
+          <DictDetail ref="dictDetail" :dict-id="cellClickId" />
         </el-card>
       </el-col>
 
@@ -158,8 +159,12 @@ import formMixin from '@/mixins/formMixin'
 import { getDictById, dictDelByIdsApi, dictSaveBaseApi, dictUpdateBaseApi, getDictByPageApi } from '@/api/dict'
 import commonUtil from '@/utils/common'
 import CommonEnum from '@/enum/CommonEnum'
+import DictDetail from './dicDetail'
 export default {
   name: 'Dict',
+  components: {
+    DictDetail
+  },
   mixins: [tableMixin, formMixin],
   data() {
     return {
@@ -190,7 +195,8 @@ export default {
       formLabelWidth: '120px',
       dialogType: CommonEnum.ADD.id,
       dialogTitle: CommonEnum.ADD.value,
-      CommonEnum: CommonEnum
+      CommonEnum: CommonEnum,
+      cellClickId: ''
     }
   },
   computed: {
@@ -207,6 +213,10 @@ export default {
     this.getDataList()
   },
   methods: {
+    handleCellClick(row, column, cell, event) {
+      this.cellClickId = row.id
+      this.$refs.dictDetail.getDataList()
+    },
     // 判断是否存在排版里面
     showField(name) {
       return this.checkFieldList.indexOf(name) > -1

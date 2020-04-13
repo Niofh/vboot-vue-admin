@@ -98,6 +98,12 @@ export const constantRoutes = [
         name: 'Dict',
         component: () => import('@/views/system/dict/dict'),
         meta: { title: '字典管理', icon: 'table' }
+      },
+      {
+        path: 'dictDetail',
+        name: 'DictDetail',
+        component: () => import('@/views/system/dict/dicDetail.vue'),
+        meta: { title: '字典详情', icon: 'table' }
       }
     ]
   },

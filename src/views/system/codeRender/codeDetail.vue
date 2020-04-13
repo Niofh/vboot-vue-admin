@@ -18,11 +18,10 @@
     <el-alert
       :title="name+'属性配置'"
       type="success"
-    />
-    <el-alert
-      title="MYSQL中数据类型介绍：https://www.cnblogs.com/-xlp/p/8617760.html"
-      type="success"
-    />
+    >
+      <p>1、字段都要驼峰命名</p>
+      <p><a href="https://www.cnblogs.com/-xlp/p/8617760.html" target="_blank">2、MYSQL中数据类型介绍</a></p>
+    </el-alert>
     <el-table
       ref="table"
       :data="dataList"
@@ -110,6 +109,7 @@
       >
         <template slot-scope="scope">
           <el-select v-model="scope.row.search" :disabled="!scope.row.isEdit" size="mini">
+            <el-option value="" label="请选择"></el-option>
             <el-option v-for="search in searchEnumList" :key="search.id" :value="search.id" :label="search.value" />
           </el-select>
         </template>
@@ -123,6 +123,7 @@
       >
         <template slot-scope="scope">
           <el-select v-model="scope.row.formType" :disabled="!scope.row.isEdit" size="mini">
+            <el-option value="" label="请选择"></el-option>
             <el-option v-for="form in formEnumList" :key="form.id" :value="form.id" :label="form.value" />
           </el-select>
         </template>
