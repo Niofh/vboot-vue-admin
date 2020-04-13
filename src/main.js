@@ -17,7 +17,10 @@ import '@/permission' // permission control
 import VueHighlightJS from 'vue-highlightjs'
 import 'highlight.js/styles/atelier-estuary-dark.css'
 
+import Clipboard from '@/directive/clipboard'
+
 Vue.use(VueHighlightJS)
+Vue.use(Clipboard)
 Vue.use(ElementUI)
 Vue.prototype.$code = 200
 

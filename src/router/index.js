@@ -92,6 +92,12 @@ export const constantRoutes = [
         component: () => import('@/views/system/codeRender/codeShow'),
         meta: { title: '代码预览' },
         hidden: true
+      },
+      {
+        path: 'dict',
+        name: 'Dict',
+        component: () => import('@/views/system/dict/dict'),
+        meta: { title: '字典管理', icon: 'table' }
       }
     ]
   },

@@ -2,9 +2,9 @@
   <div class="app-container">
     <el-page-header content="预览代码" @back="goBack" />
     <div class="btns-wrap">
-      <el-button type="primary" size="small">复制代码</el-button>
-
       <el-button class="btn-default" size="small" icon="el-icon-refresh-left" @click="handleRefresh">刷新</el-button>
+      <el-button v-clipboard:copy="inputData" v-clipboard:success="clipboardSuccess" type="primary" size="small">复制代码</el-button>
+
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="api" name="api">
@@ -43,7 +43,8 @@ export default {
   data() {
     return {
       activeName: 'api',
-      result: {}
+      result: {},
+      inputData: ''
     }
   },
   created() {
@@ -54,7 +55,7 @@ export default {
       this.$router.back()
     },
     handleClick(tab, event) {
-      console.log(tab, event)
+      this.inputData = this.result[tab.name]
     },
     getCode() {
       showCode({ id: this.$route.params.codeId }).then(res => {
@@ -65,6 +66,13 @@ export default {
     },
     handleRefresh() {
       this.getCode()
+    },
+    clipboardSuccess() {
+      this.$message({
+        message: '复制成功',
+        type: 'success',
+        duration: 1500
+      })
     }
   }
 }

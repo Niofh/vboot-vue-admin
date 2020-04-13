@@ -19,6 +19,10 @@
       :title="name+'属性配置'"
       type="success"
     />
+    <el-alert
+      title="MYSQL中数据类型介绍：https://www.cnblogs.com/-xlp/p/8617760.html"
+      type="success"
+    />
     <el-table
       ref="table"
       :data="dataList"
