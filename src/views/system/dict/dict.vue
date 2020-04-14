@@ -61,6 +61,7 @@
             :data="dataList"
             max-height="650"
             stripe
+            size="small"
             style="width: 100%"
             highlight-current-row
             @selection-change="handleSelectionChange"
@@ -86,8 +87,8 @@
               width="100"
             >
               <template slot-scope="scope">
-                <el-button type="text" size="small" @click="openEditModal(scope.row)">编辑</el-button>
-                <el-button type="text" size="small" @click="delDictByIds(scope.row.id)">删除</el-button>
+                <el-button type="text" size="small" @click.stop="openEditModal(scope.row)">编辑</el-button>
+                <el-button type="text" size="small" @click.stop="delDictByIds(scope.row.id)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -109,7 +110,7 @@
       <el-col :sm="24" :md="14">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>字典详情</span>
+            <span><el-tag>{{ dictKey || '请选择字典类型' }}</el-tag> 字典详情</span>
           </div>
           <DictDetail ref="dictDetail" :dict-id="cellClickId" />
         </el-card>
@@ -196,7 +197,8 @@ export default {
       dialogType: CommonEnum.ADD.id,
       dialogTitle: CommonEnum.ADD.value,
       CommonEnum: CommonEnum,
-      cellClickId: ''
+      cellClickId: '',
+      dictKey: ''
     }
   },
   computed: {
@@ -215,7 +217,7 @@ export default {
   methods: {
     handleCellClick(row, column, cell, event) {
       this.cellClickId = row.id
-      console.log(this.cellClickId)
+      this.dictKey = row.dicKey
       this.$refs.dictDetail.getDataList()
     },
     // 判断是否存在排版里面

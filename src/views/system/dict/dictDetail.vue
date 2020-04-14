@@ -16,12 +16,12 @@
         />
       </el-form-item>
       <el-form-item>
-        <el-button icon="el-icon-search" type="primary" @click="handleSearch">查询</el-button>
-        <el-button icon="el-icon-refresh-right" type="success" @click="handleResetFrom">重置</el-button>
+        <el-button icon="el-icon-search" type="primary" :disabled="!dictId" @click="handleSearch">查询</el-button>
+        <el-button icon="el-icon-refresh-right" type="success" :disabled="!dictId" @click="handleResetFrom">重置</el-button>
       </el-form-item>
     </el-form>
     <div class="btns-wrap">
-      <el-button type="primary" size="small" icon="el-icon-plus" @click="openModal(CommonEnum.ADD.id)">新增</el-button>
+      <el-button type="primary" size="small" icon="el-icon-plus" :disabled="!dictId" @click="openModal(CommonEnum.ADD.id)">新增</el-button>
       <el-button
         :disabled="multipleSelection.length===0"
         type="danger"
@@ -30,7 +30,7 @@
         @click="delDictDetailByIds"
       >删除
       </el-button>
-      <el-button class="btn-default" size="small" icon="el-icon-refresh-left" @click="handleRefresh">刷新</el-button>
+      <el-button class="btn-default" size="small" icon="el-icon-refresh-left" :disabled="!dictId" @click="handleRefresh">刷新</el-button>
       <el-popover
         placement="right"
         trigger="click"
@@ -57,6 +57,7 @@
       :data="dataList"
       max-height="650"
       stripe
+      size="small"
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >

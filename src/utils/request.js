@@ -12,9 +12,6 @@ const service = axios.create({
   timeout: 15000 // request timeout
 })
 
-// post form表单提交
-axios.defaults.headers.post['Content-Type'] = 'application/json'
-
 // request interceptor
 service.interceptors.request.use(
   config => {
@@ -28,7 +25,9 @@ service.interceptors.request.use(
     }
 
     // form表单提交
-    if (config.method.toLocaleLowerCase() === 'post' && config.headers['Content-Type'] === 'application/x-www-form-urlencoded') {
+    if (config.method.toLocaleLowerCase() === 'post' && config.headers['Content-Type'] === 'application/json') {
+
+    } else {
       config.data = qs.stringify(config.data)
     }
     return config
@@ -64,16 +63,11 @@ service.interceptors.response.use(
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          // store.dispatch('user/resetToken').then(() => {
-          //   location.reload()
-          // })
+          store.dispatch('user/resetToken').then(() => {
+            location.reload()
+          })
         })
       }
-      Message({
-        message: res.message,
-        type: 'error',
-        duration: 5 * 1000
-      })
     }
     return res
   },
