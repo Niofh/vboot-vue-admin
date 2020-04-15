@@ -216,9 +216,14 @@ export default {
   },
   methods: {
     handleCellClick(row, column, cell, event) {
-      this.cellClickId = row.id
-      this.dictKey = row.dicKey
-      this.$refs.dictDetail.getDataList()
+      console.log(row, column, cell, event)
+      if (row) {
+        this.cellClickId = row.id
+        this.dictKey = row.dicKey
+        this.$nextTick(() => {
+          this.$refs.dictDetail.getDataList()
+        })
+      }
     },
     // 判断是否存在排版里面
     showField(name) {

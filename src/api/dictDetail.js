@@ -44,3 +44,11 @@ export function dictDetailDelByIdsApi(data) {
     data
   })
 }
+// 根据dictID获取字典详情
+export function getDictDetailByDictIdApi(data) {
+  return request({
+    url: '/dictDetail/getDictDetailByDictId',
+    method: 'get',
+    params: data
+  })
+}

@@ -4,24 +4,21 @@
       <el-form-item label="字典名称" prop="name">
         <el-input v-model="searchForm.name" clearable placeholder="字典名称" />
       </el-form-item>
-      <el-form-item label="创建时间" prop="date">
-        <el-date-picker
-          v-model="searchForm.date"
-          type="daterange"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          format="yyyy-MM-dd"
-          value-format="yyyy-MM-dd"
-        />
-      </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" :disabled="!dictId" @click="handleSearch">查询</el-button>
-        <el-button icon="el-icon-refresh-right" type="success" :disabled="!dictId" @click="handleResetFrom">重置</el-button>
+        <el-button icon="el-icon-refresh-right" type="success" :disabled="!dictId" @click="handleResetFrom">重置
+        </el-button>
       </el-form-item>
     </el-form>
     <div class="btns-wrap">
-      <el-button type="primary" size="small" icon="el-icon-plus" :disabled="!dictId" @click="openModal(CommonEnum.ADD.id)">新增</el-button>
+      <el-button
+        type="primary"
+        size="small"
+        icon="el-icon-plus"
+        :disabled="!dictId"
+        @click="openModal(CommonEnum.ADD.id)"
+      >新增
+      </el-button>
       <el-button
         :disabled="multipleSelection.length===0"
         type="danger"
@@ -30,7 +27,14 @@
         @click="delDictDetailByIds"
       >删除
       </el-button>
-      <el-button class="btn-default" size="small" icon="el-icon-refresh-left" :disabled="!dictId" @click="handleRefresh">刷新</el-button>
+      <el-button
+        class="btn-default"
+        size="small"
+        icon="el-icon-refresh-left"
+        :disabled="!dictId"
+        @click="handleRefresh"
+      >刷新
+      </el-button>
       <el-popover
         placement="right"
         trigger="click"
@@ -92,20 +96,6 @@
       </el-table-column>
     </el-table>
 
-    <div class="pagination-warp">
-      <el-pagination
-        background
-        layout="total ,sizes, prev, pager, next, jumper"
-        :current-page="page.pageIndex"
-        :page-size="page.pageSize"
-        :total="page.total"
-        :page-sizes="pageSizeList"
-        style="float:right;"
-        @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"
-      />
-    </div>
-
     <el-dialog
       :modal-append-to-body="false"
       width="700px"
@@ -157,7 +147,7 @@ import {
   dictDetailDelByIdsApi,
   dictDetailSaveBaseApi,
   dictDetailUpdateBaseApi,
-  getDictDetailByPageApi
+  getDictDetailByPageApi, getDictDetailByDictIdApi
 } from '@/api/dictDetail'
 import commonUtil from '@/utils/common'
 import CommonEnum from '@/enum/CommonEnum'
@@ -229,14 +219,14 @@ export default {
     // 分页
     getDataList() {
       this.dataListLoading = true
-      const params = { ...this.page, ...this.searchForm }
+      const params = { ...this.searchForm }
       delete params.date
       params.dictId = this.dictId
-      getDictDetailByPageApi(params).then(res => {
+      console.log(params)
+      getDictDetailByDictIdApi(params).then(res => {
         this.dataListLoading = false
         if (res.code === this.$code) {
-          this.dataList = res.result.records
-          this.page.total = res.result.total
+          this.dataList = res.result
         }
       })
     },
