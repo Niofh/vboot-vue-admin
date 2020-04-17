@@ -109,7 +109,7 @@
       <el-form ref="ruleForm" :model="form" :rules="rules" :label-width="formLabelWidth" size="small">
 
         <el-row :gutter="5">
-
+          <el-form-item v-show="false" prop="id" label="id" />
           <el-col :span="12" style="height: 51px;margin-bottom: 0px;">
             <el-form-item label="字典名称" prop="name">
               <el-input v-model="form.name" autocomplete="off" />
@@ -172,6 +172,7 @@ export default {
       checkFieldList: [], // 选中的字段
       multipleSelection: [],
       form: {
+        id: '',
         dictId: '',
         name: '',
         code: '',

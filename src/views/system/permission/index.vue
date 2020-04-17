@@ -59,6 +59,7 @@
     >
 
       <el-form ref="ruleForm" :model="form" :rules="rules" :label-width="formLabelWidth" size="small">
+        <el-form-item v-show="false" prop="id" label="id" />
         <el-form-item label="菜单类型">
           <el-radio-group v-model="form.type">
             <el-radio :label="-1">顶级菜单</el-radio>
@@ -155,6 +156,7 @@ export default {
   data() {
     return {
       form: {
+        id: '',
         name: '',
         hidden: 1,
         title: '',

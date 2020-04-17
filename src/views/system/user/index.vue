@@ -226,7 +226,7 @@
     >
 
       <el-form ref="ruleForm" :model="form" :rules="rules" :label-width="formLabelWidth" size="small">
-
+        <el-form-item v-show="false" prop="id" label="id" />
         <el-row :gutter="5">
           <el-col :span="12">
             <el-form-item label="用户名" prop="username">
@@ -346,6 +346,7 @@ export default {
       checkFieldList: [], // 选中的字段
       multipleSelection: [],
       form: {
+        id: '',
         username: '',
         password: '',
         nickName: '',
@@ -417,7 +418,6 @@ export default {
       this.searchForm.endDate = ''
       this.resetForm('searchForm')
       this.handleReset()
-
     },
     // 分页
     getDataList() {

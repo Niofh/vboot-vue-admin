@@ -112,7 +112,7 @@
     >
 
       <el-form ref="ruleForm" :model="form" :rules="rules" :label-width="formLabelWidth" size="small">
-
+        <el-form-item v-show="false" prop="id" label="id" />
         <el-row :gutter="5">
           <el-col :span="12">
             <el-form-item label="文件名称" prop="name">
