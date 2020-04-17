@@ -116,15 +116,21 @@ service.interceptors.response.use(
         default:
           err.message = '接口异常，请联系管理员'
       }
+      Message({
+        message: err.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
     }
     if (err.message.indexOf('timeout') > -1) {
       err.message = '网络接口超时，请联系管理员'
+      Message({
+        message: err.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
     }
-    Message({
-      message: err.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+
     return Promise.reject(err) // 返回接口返回的错误信息
   }
 )

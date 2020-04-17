@@ -11,17 +11,6 @@
             <el-form-item label="字典名称" prop="dicName">
               <el-input v-model="searchForm.dicName" clearable placeholder="字典名称" />
             </el-form-item>
-            <el-form-item label="创建时间" prop="date">
-              <el-date-picker
-                v-model="searchForm.date"
-                type="daterange"
-                range-separator="至"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
-              />
-            </el-form-item>
             <el-form-item>
               <el-button icon="el-icon-search" type="primary" @click="handleSearch">查询</el-button>
               <el-button icon="el-icon-refresh-right" type="success" @click="handleResetFrom">重置</el-button>
