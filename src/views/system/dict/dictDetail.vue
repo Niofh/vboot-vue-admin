@@ -231,6 +231,9 @@ export default {
         }
       })
     },
+    setDataList(dataList) {
+      this.dataList = dataList
+    },
     // 打开弹出框
     openModal(type) {
       this.dialogFormVisible = true

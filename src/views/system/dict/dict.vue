@@ -207,7 +207,7 @@ export default {
   methods: {
     handleCellClick(row, column, cell, event) {
       console.log(row, column, cell, event)
-      if (row) {
+      if (row.id) {
         this.cellClickId = row.id
         this.dictKey = row.dicKey
         this.$nextTick(() => {
@@ -300,6 +300,7 @@ export default {
         }).then(res => {
           if (res.code === this.$code) {
             this.getDataList()
+            this.$refs.dictDetail.setDataList([])
             this.$message({
               type: 'success',
               message: '删除成功!'

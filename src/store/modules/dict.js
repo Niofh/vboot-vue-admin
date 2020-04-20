@@ -2,7 +2,7 @@ import { getDictAllBaseApi } from '@/api/dict'
 
 const getDefaultState = () => {
   return {
-    dictList: [] // 字典列表
+    sexDictList: [] // 性别字典列表
 
   }
 }
@@ -14,26 +14,28 @@ const getters = {
 }
 
 const mutations = {
-  SET_DICT_LIST(state, dictList) {
-    state.dictList = dictList
+  SET_SEX_DICT_LIST(state, sexDictList) {
+    state.sexDictList = sexDictList
   }
 }
 
 const actions = {
-  // 获取所有字典
-  getAllDict({ commit, state }) {
+  // 获取性别字典
+  getSexDictList({ commit, state }, { dickName }) {
     return new Promise((resolve, reject) => {
-      if (state.dictList.length > 0) {
-        resolve(state.dictList)
+      if (state.sexDictList.length > 0) {
+        resolve(state.sexDictList)
         return
       }
-      getDictAllBaseApi().then(response => {
+      getDictAllBaseApi({
+        dickName: dickName
+      }).then(response => {
         if (response.code === 200) {
-          commit('SET_DICT_LIST', response.result)
+          commit('SET_SEX_DICT_LIST', response.result)
         }
         resolve(response.result)
-      }).catch(error => {
-        reject(error)
+      }).catch(() => {
+        reject([])
       })
     })
   }

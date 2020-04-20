@@ -47,7 +47,7 @@ export function dictDelByIdsApi(data) {
 
 export function getDictAllBaseApi() {
   return request({
-    url: '/#{name}/getAllBase',
+    url: '/dict/getAllBase',
     method: 'get'
   })
 }
