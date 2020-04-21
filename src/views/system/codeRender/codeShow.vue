@@ -13,6 +13,9 @@
       <el-tab-pane label="table.vue" name="table">
         <pre v-highlightjs="result.table"><code class="javascript" /></pre>
       </el-tab-pane>
+      <el-tab-pane label="vuexDict.js" name="vuexDict">
+        <pre v-highlightjs="result.vuexDict"><code class="javascript" /></pre>
+      </el-tab-pane>
       <el-tab-pane label="entity" name="entity">
         <pre v-highlightjs="result.entity"><code class="java" /></pre>
       </el-tab-pane>
