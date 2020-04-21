@@ -8,8 +8,8 @@
             <span>字典列表</span>
           </div>
           <el-form ref="searchForm" :inline="true" :model="searchForm" class="demo-form-inline" size="small">
-            <el-form-item label="字典名称" prop="dicName">
-              <el-input v-model="searchForm.dicName" clearable placeholder="字典名称" />
+            <el-form-item label="字典名称" prop="dictName">
+              <el-input v-model="searchForm.dictName" clearable placeholder="字典名称" />
             </el-form-item>
             <el-form-item>
               <el-button icon="el-icon-search" type="primary" @click="handleSearch">查询</el-button>
@@ -34,10 +34,10 @@
               <!--排版-->
               <el-checkbox-group v-model="checkFieldList">
                 <p>
-                  <el-checkbox label="dicName" checked>字典名称</el-checkbox>
+                  <el-checkbox label="dictName" checked>字典名称</el-checkbox>
                 </p>
                 <p>
-                  <el-checkbox label="dicKey" checked>字典Key</el-checkbox>
+                  <el-checkbox label="dictKey" checked>字典Key</el-checkbox>
                 </p>
               </el-checkbox-group>
               <el-button slot="reference" class="btn-default" size="small" icon="el-icon-edit">排版</el-button>
@@ -61,13 +61,13 @@
               width="55"
             />
             <el-table-column
-              v-if="showField('dicName')"
-              prop="dicName"
+              v-if="showField('dictName')"
+              prop="dictName"
               label="字典名称"
             />
             <el-table-column
-              v-if="showField('dicKey')"
-              prop="dicKey"
+              v-if="showField('dictKey')"
+              prop="dictKey"
               label="字典Key"
             />
             <el-table-column
@@ -122,14 +122,14 @@
         <el-row :gutter="5">
           <el-form-item v-show="false" prop="id" label="id" />
           <el-col :span="12">
-            <el-form-item label="字典名称" prop="dicName">
-              <el-input v-model="form.dicName" autocomplete="off" />
+            <el-form-item label="字典名称" prop="dictName">
+              <el-input v-model="form.dictName" autocomplete="off" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12">
-            <el-form-item label="字典Key" prop="dicKey">
-              <el-input v-model="form.dicKey" autocomplete="off" />
+            <el-form-item label="字典Key" prop="dictKey">
+              <el-input v-model="form.dictKey" autocomplete="off" />
             </el-form-item>
           </el-col>
 
@@ -160,8 +160,8 @@ export default {
   data() {
     return {
       searchForm: {
-        dicName: '',
-        dicKey: '',
+        dictName: '',
+        dictKey: '',
         date: '',
         createDate: '',
         endDate: ''
@@ -170,15 +170,15 @@ export default {
       multipleSelection: [],
       form: {
         id: '',
-        dicName: '',
-        dicKey: ''
+        dictName: '',
+        dictKey: ''
 
       },
       rules: {
-        dicName: [
+        dictName: [
           { required: true, message: '这是必填项', trigger: 'blur' }
         ],
-        dicKey: [
+        dictKey: [
           { required: true, message: '这是必填项', trigger: 'blur' }
         ]
       },
@@ -209,7 +209,7 @@ export default {
       console.log(row, column, cell, event)
       if (row.id) {
         this.cellClickId = row.id
-        this.dictKey = row.dicKey
+        this.dictKey = row.dictKey
         this.$nextTick(() => {
           this.$refs.dictDetail.getDataList()
         })

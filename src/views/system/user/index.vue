@@ -9,8 +9,7 @@
       </el-form-item>
       <el-form-item label="用户状态" prop="status">
         <el-select v-model="searchForm.status" placeholder="用户状态">
-          <el-option label="启用" :value="0" />
-          <el-option label="禁用" :value="-1" />
+          <el-option v-for="status in statusDictList" :key="status.id" :label="status.name" :value="status.code" />
         </el-select>
       </el-form-item>
       <el-form-item label="创建时间" prop="date">
@@ -149,14 +148,22 @@
         label="性别"
         width="150"
         sortable
-      />
+      >
+        <template slot-scope="scope">
+          {{ scope.row.sex | dictFilter(sexDictList) }}
+        </template>
+      </el-table-column>
       <el-table-column
         v-if="showField('status')"
         prop="status"
         label="用户状态"
         width="150"
         sortable
-      />
+      >
+        <template slot-scope="scope">
+          {{ scope.row.status | dictFilter(statusDictList) }}
+        </template>
+      </el-table-column>
 
       <el-table-column
         v-if="showField('description')"
@@ -387,12 +394,13 @@ export default {
       return this.$store.getters['dep/getDepTree']
     },
     ...mapState({
-      depList: state => state.dep.depList
+      depList: state => state.dep.depList,
+      sexDictList: state => state.dict.sexDictList,
+      statusDictList: state => state.dict.statusDictList
     })
   },
   watch: {
     'searchForm.date'(val) {
-      console.log(val, '============')
       const startAndTime = commonUtil.getStartAndTime(val)
       console.log('startAndTime', startAndTime)
       this.searchForm.createDate = startAndTime[0]
@@ -400,10 +408,18 @@ export default {
     }
   },
   created() {
+    this.getSexDictList()
+    this.getStatusDictList()
     this.getDataList()
     this.getAllDepartment()
   },
   methods: {
+    getSexDictList() {
+      this.$store.dispatch('dict/getSexDictList')
+    },
+    getStatusDictList() {
+      this.$store.dispatch('dict/getStatusDictList')
+    },
     // 判断是否存在排版里面
     showField(name) {
       return this.checkFieldList.indexOf(name) > -1

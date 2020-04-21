@@ -45,9 +45,11 @@ export function dictDelByIdsApi(data) {
   })
 }
 
-export function getDictAllBaseApi() {
+// 根据dictKey获取字典详情
+export function getDictDetailByDictKey(data) {
   return request({
-    url: '/dict/getAllBase',
-    method: 'get'
+    url: '/dict/getDictDetailByDictKey',
+    method: 'get',
+    params: data
   })
 }

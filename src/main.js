@@ -22,6 +22,19 @@ import Clipboard from '@/directive/clipboard'
 Vue.use(VueHighlightJS)
 Vue.use(Clipboard)
 Vue.use(ElementUI)
+
+// 全局字典过滤器
+Vue.filter('dictFilter', function(value, dictList) {
+  let name = ''
+  for (let i = 0; i < dictList.length; i++) {
+    if (dictList[i].code == value) {
+      name = dictList[i].name
+      break
+    }
+  }
+  return name
+})
+
 Vue.prototype.$code = 200
 
 Vue.config.productionTip = false
