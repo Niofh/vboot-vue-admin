@@ -98,7 +98,13 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-switch v-model="scope.row.tableSite" :active-value="1" :inactive-value="0" :disabled="!scope.row.isEdit" size="mini" />
+          <el-switch
+            v-model="scope.row.tableSite"
+            :active-value="1"
+            :inactive-value="0"
+            :disabled="!scope.row.isEdit"
+            size="mini"
+          />
         </template>
       </el-table-column>
       <el-table-column
@@ -136,18 +142,27 @@
       >
         <template slot-scope="scope">
 
-          <el-switch v-model="scope.row.required" :active-value="1" :inactive-value="0" :disabled="!scope.row.isEdit" size="mini" />
+          <el-switch
+            v-model="scope.row.required"
+            :active-value="1"
+            :inactive-value="0"
+            :disabled="!scope.row.isEdit"
+            size="mini"
+          />
         </template>
       </el-table-column>
 
       <el-table-column
-        prop="dictId"
+        prop="dictKey"
         label="关联数字字典"
         align="center"
         width="180"
       >
         <template slot-scope="scope">
-          <el-select v-model="scope.row.dictId" :disabled="!scope.row.isEdit" size="mini" />
+          <el-select v-model="scope.row.dictKey" :disabled="!scope.row.isEdit" size="mini">
+            <el-option value="" label="请选择" />
+            <el-option v-for="dict in dictAll" :key="dict.id" :label="dict.dictName" :value="dict.dictKey" />
+          </el-select>
         </template>
       </el-table-column>
 
@@ -158,7 +173,14 @@
         align="center"
       >
         <template slot-scope="scope">
-          <el-input-number v-model.trim="scope.row.num" :disabled="!scope.row.isEdit" size="mini" :precision="2" :step="0.1" :max="10" />
+          <el-input-number
+            v-model.trim="scope.row.num"
+            :disabled="!scope.row.isEdit"
+            size="mini"
+            :precision="2"
+            :step="0.1"
+            :max="10"
+          />
         </template>
       </el-table-column>
 
@@ -187,6 +209,7 @@ import {
 import { getArray } from '@/enum/EnumBase'
 import FormEnum from '@/enum/FormEnum'
 import SqlEnum from '@/enum/SqlEnum'
+import { getDictAll } from '@/api/dict'
 
 export default {
   name: 'CodeAttr',
@@ -198,13 +221,22 @@ export default {
       multipleSelection: [],
       dataList: [],
       formEnumList: getArray(FormEnum),
-      searchEnumList: getArray(SqlEnum)
+      searchEnumList: getArray(SqlEnum),
+      dictAll: []
     }
   },
   created() {
+    this.getDictAll()
     this.getDataList()
   },
   methods: {
+    getDictAll() {
+      getDictAll().then(res => {
+        if (res.code === this.$code) {
+          this.dictAll = res.result
+        }
+      })
+    },
     goBack() {
       this.$router.back()
     },
@@ -233,7 +265,7 @@ export default {
         tableSite: 0,
         formType: '',
         search: '',
-        dictId: '',
+        dictKey: '',
         num: 1,
         isEdit: false
       }
@@ -328,23 +360,27 @@ export default {
       })
     },
     handleCodeShow() {
-      this.$router.push({ name: 'CodeShow', params: { codeId: this.$route.params.codeId }, query: { name: this.$route.query.name }})
+      this.$router.push({
+        name: 'CodeShow',
+        params: { codeId: this.$route.params.codeId },
+        query: { name: this.$route.query.name }
+      })
     }
   }
 }
 </script>
 
 <style lang="scss">
-  .code-detail{
-    .el-input.is-disabled .el-input__inner{
-      color:  #606266;
+  .code-detail {
+    .el-input.is-disabled .el-input__inner {
+      color: #606266;
     }
   }
 </style>
 
 <style scoped lang="scss">
 
-.btns-wrap{
-  margin-top: 20px;
-}
+  .btns-wrap {
+    margin-top: 20px;
+  }
 </style>

@@ -53,3 +53,11 @@ export function getDictDetailByDictKey(data) {
     params: data
   })
 }
+
+export function getDictAll(data) {
+  return request({
+    url: '/dict/getAllBase',
+    method: 'get',
+    params: data
+  })
+}
