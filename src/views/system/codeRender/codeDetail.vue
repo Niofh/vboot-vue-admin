@@ -13,7 +13,7 @@
         @click="delByIds"
       >删除
       </el-button>
-
+      <el-button type="primary" size="small" @click="handleCodeShow">预览代码</el-button>
     </div>
     <el-alert
       :title="name+'属性配置'"
@@ -109,7 +109,7 @@
       >
         <template slot-scope="scope">
           <el-select v-model="scope.row.search" :disabled="!scope.row.isEdit" size="mini">
-            <el-option value="" label="请选择"></el-option>
+            <el-option value="" label="请选择" />
             <el-option v-for="search in searchEnumList" :key="search.id" :value="search.id" :label="search.value" />
           </el-select>
         </template>
@@ -123,7 +123,7 @@
       >
         <template slot-scope="scope">
           <el-select v-model="scope.row.formType" :disabled="!scope.row.isEdit" size="mini">
-            <el-option value="" label="请选择"></el-option>
+            <el-option value="" label="请选择" />
             <el-option v-for="form in formEnumList" :key="form.id" :value="form.id" :label="form.value" />
           </el-select>
         </template>
@@ -326,6 +326,9 @@ export default {
           }
         })
       })
+    },
+    handleCodeShow() {
+      this.$router.push({ name: 'CodeShow', params: { codeId: this.$route.params.codeId }, query: { name: this.$route.query.name }})
     }
   }
 }
