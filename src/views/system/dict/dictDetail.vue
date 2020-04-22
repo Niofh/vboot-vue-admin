@@ -147,7 +147,7 @@ import {
   dictDetailDelByIdsApi,
   dictDetailSaveBaseApi,
   dictDetailUpdateBaseApi,
-  getDictDetailByPageApi, getDictDetailByDictIdApi
+  getDictDetailByDictIdApi
 } from '@/api/dictDetail'
 import commonUtil from '@/utils/common'
 import CommonEnum from '@/enum/CommonEnum'

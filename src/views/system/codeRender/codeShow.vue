@@ -8,30 +8,39 @@
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="api" name="api">
+        {{ name }}.js
         <pre v-highlightjs="result.api"><code class="javascript" /></pre>
       </el-tab-pane>
       <el-tab-pane label="table.vue" name="table">
+        {{ name }}.vue
         <pre v-highlightjs="result.table"><code class="javascript" /></pre>
       </el-tab-pane>
       <el-tab-pane label="vuexDict.js" name="vuexDict">
+        {{ name }}Dict.js
         <pre v-highlightjs="result.vuexDict"><code class="javascript" /></pre>
       </el-tab-pane>
       <el-tab-pane label="entity" name="entity">
+        {{ Name }}.java
         <pre v-highlightjs="result.entity"><code class="java" /></pre>
       </el-tab-pane>
       <el-tab-pane label="controller" name="controller">
+        {{ Name }}Controller.java
         <pre v-highlightjs="result.controller"><code class="java" /></pre>
       </el-tab-pane>
       <el-tab-pane label="service" name="service">
+        {{ Name }}Service.java
         <pre v-highlightjs="result.service"><code class="java" /></pre>
       </el-tab-pane>
       <el-tab-pane label="serviceImpl" name="serviceImpl">
+        {{ Name }}ServiceImpl.java
         <pre v-highlightjs="result.serviceImpl"><code class="java" /></pre>
       </el-tab-pane>
       <el-tab-pane label="mapper" name="mapper">
+        {{ Name }}Mapper.java
         <pre v-highlightjs="result.mapper"><code class="java" /></pre>
       </el-tab-pane>
       <el-tab-pane label="mysql" name="mysql">
+        t_{{ name }}.sql
         <pre v-highlightjs="result.mysql"><code class="sql" /></pre>
       </el-tab-pane>
     </el-tabs>
@@ -47,17 +56,21 @@ export default {
     return {
       activeName: 'api',
       result: {},
-      inputData: ''
+      inputData: '',
+      name: ''
     }
   },
   created() {
     this.getCode()
+    this.name = this.$route.query.name
+    this.Name = this.name.slice(0, 1).toUpperCase() + this.name.slice(1)
   },
   methods: {
     goBack() {
       this.$router.back()
     },
     handleClick(tab, event) {
+      console.log(this.result[tab.name])
       this.inputData = this.result[tab.name]
     },
     getCode() {

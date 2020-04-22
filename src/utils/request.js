@@ -3,7 +3,7 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 import qs from 'qs'
-import router from '@/router'
+// import router from '@/router'
 
 // create an axios instance
 const service = axios.create({
@@ -26,7 +26,7 @@ service.interceptors.request.use(
 
     // form表单提交
     if (config.method.toLocaleLowerCase() === 'post' && config.headers['Content-Type'] === 'application/json') {
-
+      console.log('')
     } else {
       config.data = qs.stringify(config.data)
     }

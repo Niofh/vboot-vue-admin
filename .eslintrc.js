@@ -24,6 +24,7 @@ module.exports = {
         }
       }
     ],
+    'vue/attributes-order': 'error', // 属性排序
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/name-property-casing': ['error', 'PascalCase'],

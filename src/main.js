@@ -27,7 +27,7 @@ Vue.use(ElementUI)
 Vue.filter('dictFilter', function(value, dictList) {
   let name = ''
   for (let i = 0; i < dictList.length; i++) {
-    if (dictList[i].code == value) {
+    if (dictList[i].code === value) {
       name = dictList[i].name
       break
     }

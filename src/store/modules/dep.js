@@ -1,5 +1,4 @@
 import { getAllDepartmentApi } from '@/api/dep'
-import commonUtil from '@/utils/common'
 import treeDeepUtil from '@/utils/treeDeepUtil'
 
 const getDefaultState = () => {
