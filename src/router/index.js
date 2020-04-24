@@ -69,6 +69,12 @@ export const constantRoutes = [
         meta: { title: '用户管理', icon: 'table' }
       },
       {
+        path: 'department',
+        name: 'Department',
+        component: () => import('@/views/system/department/department'),
+        meta: { title: '部门管理', icon: 'table' }
+      },
+      {
         path: 'role',
         name: 'Role',
         component: () => import('@/views/system/role/index'),
