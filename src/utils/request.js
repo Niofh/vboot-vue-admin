@@ -27,7 +27,7 @@ service.interceptors.request.use(
     // form表单提交
     if (config.method.toLocaleLowerCase() === 'post' && config.headers['Content-Type'] === 'application/json') {
       console.log('')
-    } else {
+    } else  {
       config.data = qs.stringify(config.data)
     }
     return config

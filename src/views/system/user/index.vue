@@ -286,6 +286,7 @@
               </el-popover>
             </el-form-item>
           </el-col>
+
           <el-col :span="12" style="height: 51px">
             <el-form-item label="性别" prop="sex">
               <el-radio-group v-model="form.sex">
@@ -302,7 +303,18 @@
               </el-radio-group>
             </el-form-item>
           </el-col>
-
+          <el-col :span="24" style="height: 51px;margin-bottom: 0px;">
+            <el-form-item label="所属角色">
+              <el-select v-model="roleIds" multiple placeholder="请选择" style="width: 100%;">
+                <el-option
+                  v-for="item in roleList"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id"
+                />
+              </el-select>
+            </el-form-item>
+          </el-col>
           <el-col :span="24">
             <el-form-item label="省市县地址" prop="address">
               <el-input v-model="form.address" type="textarea" />
@@ -337,6 +349,7 @@ import { getUserById, getUserByPageApi, userDelByIdsApi, userSaveBaseApi, userUp
 import commonUtil from '@/utils/common'
 import CommonEnum from '@/enum/CommonEnum'
 import { mapState } from 'vuex'
+import { getRoleAllBaseApi } from '@/api/role'
 export default {
   name: 'User',
   mixins: [tableMixin, formMixin],
@@ -386,7 +399,9 @@ export default {
       defaultProps: {
         children: 'children',
         label: 'title'
-      }
+      },
+      roleList: [],
+      roleIds: []
     }
   },
   computed: {
@@ -412,6 +427,7 @@ export default {
     this.getStatusDictList()
     this.getDataList()
     this.getAllDepartment()
+    this.getRoleAll()
   },
   methods: {
     getSexDictList() {
@@ -461,6 +477,7 @@ export default {
         if (res.code === this.$code) {
           this.form = res.result
           this.form.password = ''
+          this.roleIds = res.result.roleIds
           if (this.form.departmentId) {
             // 设置部门名称
             let title
@@ -480,6 +497,7 @@ export default {
     // 添加用户
     userSaveBase() {
       this.loading = true
+      this.form.roleIds = this.roleIds.toString()
       userSaveBaseApi(this.form).then(res => {
         if (res.code === this.$code) {
           this.getDataList()
@@ -493,6 +511,7 @@ export default {
     // 更新用户
     userUpdateBase() {
       this.loading = true
+      this.form.roleIds = this.roleIds.toString()
       userUpdateBaseApi(this.form).then(res => {
         if (res.code === this.$code) {
           this.getDataList()
@@ -560,6 +579,14 @@ export default {
     menuNodeClick(node) {
       this.form.departmentTitle = node.title
       this.form.departmentId = node.id
+    },
+    // 获取角色
+    getRoleAll() {
+      getRoleAllBaseApi().then(res => {
+        if (res.code === this.$code) {
+          this.roleList = res.result
+        }
+      })
     }
   }
 }
