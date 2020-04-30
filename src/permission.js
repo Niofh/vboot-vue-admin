@@ -29,9 +29,12 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          await store.dispatch('user/getInfo')
-
+          const userInfo = await store.dispatch('user/getInfo')
+          console.log('【userInfo】 ', userInfo)
           // 获取用户的菜单和权限
+          const menu = await store.dispatch('user/getMenuAndPer', { username: userInfo.username })
+
+          console.log('【菜单为】 ', menu)
 
           // 添加到菜单到路由列表中
 

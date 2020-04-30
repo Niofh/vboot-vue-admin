@@ -4,10 +4,11 @@ const treeDeepUtil = {
   fommatTree(arrayList, pidStr = 'parentId', idStr = 'id', childrenStr = 'children') {
     const listOjb = {} // 用来储存{key: obj}格式的对象
     const treeList = [] // 用来储存最终树形结构数据的数组
-    // 将数据变换成{key: obj}格式，方便下面处理数据
+    // 将数据变换成{id: obj}格式，方便下面处理数据
     for (let i = 0; i < arrayList.length; i++) {
       listOjb[arrayList[i][idStr]] = arrayList[i]
     }
+
     // 根据pid来将数据进行格式化
     for (let j = 0; j < arrayList.length; j++) {
     // 判断父级是否存在

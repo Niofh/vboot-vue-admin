@@ -70,3 +70,12 @@ export function userDelByIdsApi(data) {
     data
   })
 }
+
+// 根据用户名获取菜单和权限
+export function findMenuAndPerByUsername(data) {
+  return request({
+    url: '/user/findMenuAndPerByUsername',
+    method: 'get',
+    params: data
+  })
+}

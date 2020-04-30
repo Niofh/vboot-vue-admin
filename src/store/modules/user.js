@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, getInfo, findMenuAndPerByUsername } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -6,7 +6,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    menu: []
   }
 }
 
@@ -24,6 +25,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_MENU: (state, menu) => {
+    state.menu = menu
   }
 }
 
@@ -87,7 +91,27 @@ const actions = {
       commit('RESET_STATE')
       resolve()
     })
+  },
+  // 根据用户名获取菜单和权限
+  getMenuAndPer({ commit }, { username }) {
+    return new Promise((resolve, reject) => {
+      findMenuAndPerByUsername({ username }).then(res => {
+        if (res.code === 200) {
+          const menu = res.result.permissions
+          resolve(menu)
+        } else {
+          reject()
+        }
+      }).catch(error => {
+        reject(error)
+      })
+    })
   }
+}
+
+
+function arrayToTree(){
+
 }
 
 export default {
