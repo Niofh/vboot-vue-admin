@@ -109,8 +109,8 @@ const actions = {
   }
 }
 
-
-function arrayToTree(){
+// 数组转换为
+function arrayToTree() {
 
 }
 
