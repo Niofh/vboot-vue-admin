@@ -45,13 +45,6 @@ const actions = {
         reject(error)
       })
     })
-
-    // return new Promise(resolve => {
-    //   const accessedRoutes = asyncRoutes || []
-    //   console.log(accessedRoutes, '================')
-    //   commit('SET_ROUTES', accessedRoutes)
-    //   resolve(accessedRoutes)
-    // })
   }
 }
 
