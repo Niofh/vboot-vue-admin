@@ -247,6 +247,9 @@ export default {
           this.$set(this.form, 'parentTitle', item.title)
         }
       })
+      this.$nextTick(function() {
+        this.$refs['tree'].setCurrentKey(this.form.parentId)
+      })
     },
     handleDelByIds() {
       const checkedKeys = this.$refs.treeMenu.getCheckedKeys()
