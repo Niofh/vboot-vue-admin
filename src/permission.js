@@ -8,37 +8,41 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
+
   // set page title
   document.title = getPageTitle(to.meta.title)
+
   // determine whether the user has logged in
   const hasToken = getToken()
+
   if (hasToken) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      // determine whether the user has obtained his permission roles through getInfo
+      const hasRoles = store.getters.name && store.getters.name.length > 0
+      if (hasRoles) {
         next()
       } else {
         try {
           // get user info
-          const userInfo = await store.dispatch('user/getInfo')
-          console.log('【userInfo】 ', userInfo)
-          // 获取用户的菜单和权限
-          const menu = await store.dispatch('user/getMenuAndPer', { username: userInfo.username })
+          const { username } = await store.dispatch('user/getInfo')
 
-          console.log('【菜单为】 ', menu)
+          const accessRoutes = await store.dispatch('permission/generateRoutes', { username })
+          // dynamically add accessible routes
+          // this.$router.options.routes = accessRoutes
+          router.addRoutes(accessRoutes)
 
-          // 添加到菜单到路由列表中
-
-          next()
+          // hack method to ensure that addRoutes is complete
+          // set the replace: true, so the navigation will not leave a history record
+          next({ ...to, replace: true })
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

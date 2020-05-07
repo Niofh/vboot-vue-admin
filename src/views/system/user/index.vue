@@ -472,7 +472,6 @@ export default {
     },
     // 修改弹出框
     openEditModal(tableItem) {
-      console.log()
       getUserById(tableItem.id).then(res => {
         if (res.code === this.$code) {
           this.form = res.result

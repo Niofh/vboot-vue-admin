@@ -16,7 +16,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-    console.log(config)
     if (store.getters.token) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
@@ -27,7 +26,7 @@ service.interceptors.request.use(
     // form表单提交
     if (config.method.toLocaleLowerCase() === 'post' && config.headers['Content-Type'] === 'application/json') {
       console.log('')
-    } else  {
+    } else {
       config.data = qs.stringify(config.data)
     }
     return config

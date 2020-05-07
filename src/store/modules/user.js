@@ -91,27 +91,7 @@ const actions = {
       commit('RESET_STATE')
       resolve()
     })
-  },
-  // 根据用户名获取菜单和权限
-  getMenuAndPer({ commit }, { username }) {
-    return new Promise((resolve, reject) => {
-      findMenuAndPerByUsername({ username }).then(res => {
-        if (res.code === 200) {
-          const menu = res.result.permissions
-          resolve(menu)
-        } else {
-          reject()
-        }
-      }).catch(error => {
-        reject(error)
-      })
-    })
   }
-}
-
-// 数组转换为
-function arrayToTree() {
-
 }
 
 export default {
