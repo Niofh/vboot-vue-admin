@@ -2,18 +2,6 @@ import { constantRoutes, asyncRoutes } from '@/router'
 import { findMenuAndPerByUsername } from '@/api/user'
 import treeDeepUtil from '@/utils/treeDeepUtil'
 import Layout from '@/layout'
-/**
- * Use meta.role to determine if the current user has permission
- * @param roles
- * @param route
- */
-function hasPermission(roles, route) {
-  if (route.meta && route.meta.permission) {
-    return roles.some(role => route.meta.permission.includes(role))
-  } else {
-    return true
-  }
-}
 
 const state = {
   routes: [],
@@ -75,13 +63,10 @@ function arrayToTree(menuList) {
         title: menu.title,
         icon: menu.icon,
         noCache: !menu.nocache,
-        permissions: []
+        permissions: perList.filter(item => item.parentId === menu.id)
       }
     })
   })
-
-  console.log(router)
-
   var fommatTree = treeDeepUtil.fommatTree(router)
   var concat = fommatTree.concat([{ path: '*', redirect: '/404', hidden: true }])
   console.log('【concat】', concat)

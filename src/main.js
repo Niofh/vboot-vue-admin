@@ -12,6 +12,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import permission from '@/directive/permission'
 
 import VueHighlightJS from 'vue-highlightjs'
 import 'highlight.js/styles/atelier-estuary-dark.css'
@@ -21,6 +22,7 @@ import Clipboard from '@/directive/clipboard'
 Vue.use(VueHighlightJS)
 Vue.use(Clipboard)
 Vue.use(ElementUI)
+Vue.use(permission)
 
 // 全局字典过滤器
 Vue.filter('dictFilter', function(value, dictList) {

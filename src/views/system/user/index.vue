@@ -29,7 +29,7 @@
       </el-form-item>
     </el-form>
     <div class="btns-wrap">
-      <el-button type="primary" size="small" icon="el-icon-plus" @click="openModal(CommonEnum.ADD.id)">新增</el-button>
+      <el-button v-permission="['add']" type="primary" size="small" icon="el-icon-plus" @click="openModal(CommonEnum.ADD.id)">新增</el-button>
       <el-button
         :disabled="multipleSelection.length===0"
         type="danger"
@@ -428,6 +428,7 @@ export default {
     this.getDataList()
     this.getAllDepartment()
     this.getRoleAll()
+    console.log(this.$route)
   },
   methods: {
     getSexDictList() {

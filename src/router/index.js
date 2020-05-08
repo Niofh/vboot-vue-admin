@@ -79,71 +79,7 @@ export const constantRoutes = [
 
 ]
 
-export const asyncRoutes = [
-
-  {
-    path: '/system',
-    component: Layout,
-    redirect: '',
-    name: 'System',
-    // alwaysShow: true, // will always show the root menu
-    meta: { title: '系统管理', icon: 'example' },
-    children: [
-      {
-        path: 'user',
-        name: 'User',
-        component: () => import('@/views/system/user/index'),
-        meta: { title: '用户管理', icon: 'table' }
-      },
-      {
-        path: 'department',
-        name: 'Department',
-        component: () => import('@/views/system/department/department'),
-        meta: { title: '部门管理', icon: 'table' }
-      },
-      {
-        path: 'role',
-        name: 'Role',
-        component: () => import('@/views/system/role/index'),
-        meta: { title: '角色管理', icon: 'table' }
-      },
-      {
-        path: 'permission',
-        name: 'Permission',
-        component: () => import('@/views/system/permission/index'),
-        meta: { title: '权限管理', icon: 'table' }
-      },
-      {
-        path: 'codeRender',
-        name: 'CodeRender',
-        component: () => import('@/views/system/codeRender/index'),
-        meta: { title: '代码生成', icon: 'table' }
-      },
-      {
-        path: 'codeDetail/:codeId',
-        name: 'CodeDetail',
-        component: () => import('@/views/system/codeRender/codeDetail'),
-        meta: { title: '代码属性' },
-        hidden: true
-      },
-      {
-        path: 'codeShow/:codeId',
-        name: 'CodeShow',
-        component: () => import('@/views/system/codeRender/codeShow'),
-        meta: { title: '代码预览' },
-        hidden: true
-      },
-      {
-        path: 'dict',
-        name: 'Dict',
-        component: () => import('@/views/system/dict/dict'),
-        meta: { title: '字典管理', icon: 'table' }
-      }
-    ]
-  },
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+export const asyncRoutes = []
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
