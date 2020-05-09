@@ -4,7 +4,8 @@ const getDefaultState = () => {
   return {
     sexDictList: [], // 性别字典列表
     statusDictList: [], // 状态字典
-    authorityDictList: []
+    authorityDictList: [],
+    msgTypeDictList: [] // 消息类型
   }
 }
 
@@ -21,6 +22,9 @@ const mutations = {
   },
   SET_AUTHORITY_DICT_LIST(state, authorityDictList) {
     state.authorityDictList = authorityDictList
+  },
+  SET_MSGTYPE_DICT_LIST(state, msgTypeDictList) {
+    state.msgTypeDictList = msgTypeDictList
   }
 }
 
@@ -75,6 +79,25 @@ const actions = {
       }).then(response => {
         if (response.code === 200) {
           commit('SET_AUTHORITY_DICT_LIST', response.result)
+        }
+        resolve(response.result)
+      }).catch(() => {
+        reject([])
+      })
+    })
+  },
+  // 获取消息类型字典
+  getMsgTypeDictList({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      if (state.msgTypeDictList.length > 0) {
+        resolve(state.msgTypeDictList)
+        return
+      }
+      getDictDetailByDictKey({
+        dictKey: 'msgType'
+      }).then(response => {
+        if (response.code === 200) {
+          commit('SET_MSGTYPE_DICT_LIST', response.result)
         }
         resolve(response.result)
       }).catch(() => {

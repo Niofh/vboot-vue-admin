@@ -16,7 +16,8 @@
         <pre v-highlightjs="result.table"><code class="javascript" /></pre>
       </el-tab-pane>
       <el-tab-pane label="vuexDict.js" name="vuexDict">
-        {{ name }}Dict.js
+        <el-alert type="error" effect="dark">字典类型需要单独复制粘贴到store/dict.js，不能直接复制文件到代码上</el-alert>
+        <div>{{ name }}Dict.js</div>
         <pre v-highlightjs="result.vuexDict"><code class="javascript" /></pre>
       </el-tab-pane>
       <el-tab-pane label="entity" name="entity">
@@ -64,6 +65,7 @@ export default {
     this.getCode()
     this.name = this.$route.query.name
     this.Name = this.name.slice(0, 1).toUpperCase() + this.name.slice(1)
+    this.activeName = 'api'
   },
   methods: {
     goBack() {
@@ -82,6 +84,7 @@ export default {
     },
     handleRefresh() {
       this.getCode()
+      this.inputData = this.result[this.activeName]
     },
     clipboardSuccess() {
       this.$message({
