@@ -212,8 +212,8 @@ export default {
       color: #495060;
       background: #fff;
       padding: 0 8px;
-      font-size: 12px;
-      margin-left: 5px;
+      font-size: 14px;
+      margin-left: 10px;
       margin-top: 4px;
       &:first-of-type {
         margin-left: 15px;
@@ -222,9 +222,8 @@ export default {
         margin-right: 15px;
       }
       &.active {
-        background-color: #42b983;
-        color: #fff;
-        border-color: #42b983;
+        color: #2d8cf0;
+        border-bottom: 2px solid #2d8cf0;
         &::before {
           content: '';
           background: #fff;
