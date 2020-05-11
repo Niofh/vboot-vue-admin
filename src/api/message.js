@@ -1,4 +1,3 @@
-
 import request from '@/utils/request'
 
 // 分页
@@ -44,10 +43,20 @@ export function messageDelByIdsApi(data) {
     data
   })
 }
+
 // 获取所有数据
 export function getMessageAllBaseApi() {
   return request({
     url: '/message/getAllBase',
     method: 'get'
+  })
+}
+
+// 发送数据
+export function sendMsgApi(data) {
+  return request({
+    url: '/message/sendMsg',
+    method: 'post',
+    data
   })
 }

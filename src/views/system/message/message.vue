@@ -124,7 +124,7 @@
         width="150"
       >
         <template slot-scope="scope">
-          <el-button style="color: #13ce66" type="text" size="small" @click="">发送消息</el-button>
+          <el-button style="color: #13ce66" type="text" size="small" @click="sendMsg(scope.row)">发送消息</el-button>
           <el-button type="text" size="small" @click="openEditModal(scope.row)">编辑</el-button>
           <el-button type="text" size="small" @click="delMessageByIds(scope.row.id)">删除</el-button>
         </template>
@@ -224,7 +224,14 @@
 <script>
 import tableMixin from '@/mixins/tableMixin'
 import formMixin from '@/mixins/formMixin'
-import { getMessageById, messageDelByIdsApi, messageSaveBaseApi, messageUpdateBaseApi, getMessageByPageApi } from '@/api/message'
+import {
+  getMessageById,
+  messageDelByIdsApi,
+  messageSaveBaseApi,
+  messageUpdateBaseApi,
+  getMessageByPageApi,
+  sendMsgApi
+} from '@/api/message'
 import commonUtil from '@/utils/common'
 import CommonEnum from '@/enum/CommonEnum'
 import { mapState } from 'vuex'
@@ -415,8 +422,31 @@ export default {
           return false
         }
       })
+    },
+    // 发送消息
+    sendMsg({ id }) {
+      this.$confirm('是否发送消息', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        sendMsgApi({ msgId: id }).then(res => {
+          if (res.code === this.$code) {
+            this.$message({
+              type: 'success',
+              message: '发送成功!'
+            })
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.message
+            })
+          }
+        })
+      })
     }
   }
+
 }
 </script>
 
