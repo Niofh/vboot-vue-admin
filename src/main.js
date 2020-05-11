@@ -18,23 +18,11 @@ import VueHighlightJS from 'vue-highlightjs'
 import 'highlight.js/styles/atelier-estuary-dark.css'
 
 import Clipboard from '@/directive/clipboard'
-
+import './filter'
 Vue.use(VueHighlightJS)
 Vue.use(Clipboard)
 Vue.use(ElementUI)
 Vue.use(permission)
-
-// 全局字典过滤器
-Vue.filter('dictFilter', function(value, dictList) {
-  let name = ''
-  for (let i = 0; i < dictList.length; i++) {
-    if (dictList[i].code === value) {
-      name = dictList[i].name
-      break
-    }
-  }
-  return name
-})
 
 Vue.prototype.$code = 200
 

@@ -55,7 +55,7 @@
             <el-checkbox label="createUserSend" checked>新账号是否发送消息</el-checkbox>
           </p>
           <p>
-            <el-checkbox label="createTime" checked disable>创建时间</el-checkbox>
+            <el-checkbox label="createTime" checked disabled>创建时间</el-checkbox>
           </p>
         </el-checkbox-group>
         <el-button slot="reference" class="btn-default" size="small" icon="el-icon-edit">排版</el-button>
@@ -82,29 +82,35 @@
         width="150"
         sortable
       />
+
       <el-table-column
-        v-if="showField('content')"
-        prop="content"
-        label="文章内容"
-        width="150"
+        v-if="showField('createUserSend')"
+        prop="createUserSend"
+        label="新账号是否发送"
         sortable
-      />
+        width="150"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.createUserSend | flagFilter }}
+        </template>
+      </el-table-column>
       <el-table-column
         v-if="showField('msgType')"
         prop="msgType"
         label="消息类型"
-        width="150"
         sortable
+        width="100"
       >
         <template slot-scope="scope">
           {{ scope.row.msgType | dictFilter(msgTypeDictList) }}
         </template>
       </el-table-column>
       <el-table-column
-        v-if="showField('createUserSend')"
-        prop="createUserSend"
-        label="新账号是否发送消息"
+        v-if="showField('content')"
+        prop="content"
+        label="文章内容"
         sortable
+        :show-overflow-tooltip="true"
       />
       <el-table-column
         v-if="showField('createTime')"
@@ -118,6 +124,7 @@
         width="150"
       >
         <template slot-scope="scope">
+          <el-button style="color: #13ce66" type="text" size="small" @click="">发送消息</el-button>
           <el-button type="text" size="small" @click="openEditModal(scope.row)">编辑</el-button>
           <el-button type="text" size="small" @click="delMessageByIds(scope.row.id)">删除</el-button>
         </template>
@@ -143,7 +150,7 @@
       width="700px"
       top="5vh"
       :close-on-click-modal="false"
-      :title="dialogTitle+'消息表'"
+      :title="dialogTitle+'消息'"
       :visible.sync="dialogFormVisible"
       @closed="resetForm('ruleForm')"
     >
@@ -158,12 +165,6 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="24">
-            <el-form-item label="文章内容" prop="content">
-              <el-input v-model="form.content" type="textarea" />
-            </el-form-item>
-          </el-col>
-
           <el-col :span="12" style="height: 51px;margin-bottom: 0px;">
             <el-form-item label="消息类型" prop="msgType">
               <el-select v-model="form.msgType" placeholder="请选择消息类型">
@@ -174,19 +175,47 @@
           </el-col>
 
           <el-col :span="12" style="height: 51px">
-            <el-form-item label="新账号是否发送消息" prop="createUserSend">
+            <el-form-item label="新账号是否发送" prop="createUserSend">
               <el-radio-group v-model="form.createUserSend">
-                <el-radio :label="1">1</el-radio>
-                <el-radio :label="0">0</el-radio>
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
               </el-radio-group>
-              <el-form-item /></el-form-item></el-col>
-
+              <el-form-item />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" style="height: 51px">
+            <el-form-item label="是否发送所有人" prop="sendAll">
+              <el-radio-group v-model="form.sendAll">
+                <el-radio :label="1">是</el-radio>
+                <el-radio :label="0">否</el-radio>
+              </el-radio-group>
+              <el-form-item />
+            </el-form-item>
+          </el-col>
+          <el-col v-if="form.sendAll===0">
+            <el-form-item label="指定发送人员" prop="userIdList">
+              <el-select v-model="form.userIdList" filterable multiple clearable placeholder="请选择人员">
+                <el-option
+                  v-for="item in userList"
+                  :key="item.id"
+                  :label="item.nickName"
+                  :value="item.id"
+                />
+              </el-select>
+              <el-form-item />
+            </el-form-item>
+          </el-col>
+          <el-col :span="24">
+            <el-form-item label="文章内容" prop="content">
+              <el-input v-model="form.content" type="textarea" />
+            </el-form-item>
+          </el-col>
         </el-row>
 
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" :loading="loading" @click="handleConfirm">确 定</el-button>
+        <el-button type="primary" :loading="loading" @click="handleConfirm">保存草稿</el-button>
       </div>
     </el-dialog>
   </div>
@@ -199,6 +228,7 @@ import { getMessageById, messageDelByIdsApi, messageSaveBaseApi, messageUpdateBa
 import commonUtil from '@/utils/common'
 import CommonEnum from '@/enum/CommonEnum'
 import { mapState } from 'vuex'
+import { getAllUserApi } from '@/api/user'
 export default {
   name: 'Message',
   mixins: [tableMixin, formMixin],
@@ -218,7 +248,9 @@ export default {
         title: '',
         content: '',
         msgType: '',
-        createUserSend: ''
+        sendAll: 0,
+        createUserSend: 0,
+        userIdList: []
       },
       rules: {
         title: [
@@ -226,6 +258,9 @@ export default {
         ],
         content: [
           { required: true, message: '这是必填项', trigger: 'blur' }
+        ],
+        userIdList: [
+          { required: true, message: '这是必选项', trigger: 'change' }
         ],
         msgType: [
           { required: true, message: '请选择消息类型', trigger: 'change' }
@@ -235,7 +270,8 @@ export default {
       formLabelWidth: '120px',
       dialogType: CommonEnum.ADD.id,
       dialogTitle: CommonEnum.ADD.value,
-      CommonEnum: CommonEnum
+      CommonEnum: CommonEnum,
+      userList: []
     }
   },
   computed: {
@@ -253,9 +289,17 @@ export default {
   },
   created() {
     this.getDict()
+    this.getUserAll()
     this.getDataList()
   },
   methods: {
+    getUserAll() {
+      getAllUserApi().then(res => {
+        if (res.code === this.$code) {
+          this.userList = res.result
+        }
+      })
+    },
     getDict() {
       this.$store.dispatch('dict/getMsgTypeDictList')
     },
