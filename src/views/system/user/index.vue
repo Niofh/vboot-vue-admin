@@ -190,6 +190,7 @@
         prop="createTime"
         label="创建时间"
         width="180"
+        sortable="custom"
       />
 
       <el-table-column
@@ -460,18 +461,6 @@ export default {
           this.page.total = res.result.total
         }
       })
-    },
-    // 排序
-    handleSortChange({ column, prop, order }) {
-      console.log({ column, prop, order })
-      if (order) {
-        this.page.sort = prop
-        this.page.order = order === 'ascending' ? 'asc' : 'desc'
-      } else {
-        this.page.sort = ''
-        this.page.order = ''
-      }
-      this.getDataList()
     },
     // 打开弹出框
     openModal(type) {

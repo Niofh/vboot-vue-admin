@@ -55,6 +55,7 @@
             highlight-current-row
             @selection-change="handleSelectionChange"
             @cell-click="handleCellClick"
+            @sort-change="handleSortChange"
           >
             <el-table-column
               type="selection"
@@ -64,11 +65,13 @@
               v-if="showField('dictName')"
               prop="dictName"
               label="字典名称"
+              sortable
             />
             <el-table-column
               v-if="showField('dictKey')"
               prop="dictKey"
               label="字典Key"
+              sortable
             />
             <el-table-column
               fixed="right"

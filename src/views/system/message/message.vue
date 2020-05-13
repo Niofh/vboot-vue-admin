@@ -73,6 +73,7 @@
       stripe
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      @sort-change="handleSortChange"
     >
       <el-table-column
         type="selection"
@@ -124,7 +125,6 @@
         v-if="showField('content')"
         prop="content"
         label="文章内容"
-        sortable
         :show-overflow-tooltip="true"
       />
       <el-table-column

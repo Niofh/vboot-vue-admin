@@ -73,6 +73,7 @@
         v-if="showField('name')"
         prop="name"
         label="字典名称"
+        sortable
       />
       <el-table-column
         v-if="showField('code')"

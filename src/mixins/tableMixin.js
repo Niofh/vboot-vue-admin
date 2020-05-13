@@ -20,6 +20,18 @@ const tableMixin = {
     getDataList() {
       this.dataListLoading = false
     },
+    // 排序
+    handleSortChange({ column, prop, order }) {
+      console.log({ column, prop, order })
+      if (order) {
+        this.page.sort = prop
+        this.page.order = order === 'ascending' ? 'asc' : 'desc'
+      } else {
+        this.page.sort = ''
+        this.page.order = ''
+      }
+      this.getDataList()
+    },
     // 分页, 每页条数
     handleSizeChange(size) {
       this.page.pageSize = size

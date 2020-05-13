@@ -44,7 +44,7 @@
             <el-checkbox label="defaultRole" checked>默认角色</el-checkbox>
           </p>
           <p>
-            <el-checkbox label="dataType" checked>数据权限类型</el-checkbox>
+            <el-checkbox label="dataType" checked>部门权限类型</el-checkbox>
           </p>
           <p>
             <el-checkbox label="description" checked>备注</el-checkbox>
@@ -65,6 +65,7 @@
       stripe
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      @sort-change="handleSortChange"
     >
       <el-table-column
         type="selection"
@@ -82,7 +83,7 @@
         prop="defaultRole"
         label="默认角色"
         width="150"
-        sortable
+        sortable="custom"
       >
         <template slot-scope="scope">
           <el-tag :type="scope.row.defaultRole?'success':''">{{ scope.row.defaultRole?'是':'否' }}</el-tag>
@@ -91,9 +92,9 @@
       <el-table-column
         v-if="showField('dataType')"
         prop="dataType"
-        label="数据权限类型"
+        label="部门权限类型"
         width="150"
-        sortable
+        sortable="custom"
       >
         <template slot-scope="scope">
           {{ scope.row.dataType | dictFilter(authorityDictList) }}
@@ -103,14 +104,13 @@
         v-if="showField('description')"
         prop="description"
         label="备注"
-        sortable
       />
       <el-table-column
         v-if="showField('createTime')"
         prop="createTime"
         label="创建时间"
         width="180"
-        sortable
+        sortable="custom"
       />
       <el-table-column
         fixed="right"
@@ -170,7 +170,7 @@
           </el-col>
 
           <el-col :span="12" style="height: 51px;margin-bottom: 0px;">
-            <el-form-item label="数据权限类型" prop="dataType">
+            <el-form-item label="部门权限类型" prop="dataType">
               <el-select v-model="form.dataType" placeholder="请选择数据权限类型">
                 <el-option label="请选择数据权限类型" value="" />
                 <el-option
