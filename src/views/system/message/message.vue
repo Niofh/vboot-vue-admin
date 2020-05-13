@@ -55,6 +55,9 @@
             <el-checkbox label="createUserSend" checked>新账号是否发送消息</el-checkbox>
           </p>
           <p>
+            <el-checkbox label="sendAll" checked>是否发送所有人</el-checkbox>
+          </p>
+          <p>
             <el-checkbox label="createTime" checked disabled>创建时间</el-checkbox>
           </p>
         </el-checkbox-group>
@@ -92,6 +95,18 @@
       >
         <template slot-scope="scope">
           {{ scope.row.createUserSend | flagFilter }}
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        v-if="showField('sendAll')"
+        prop="sendAll"
+        label="是否发送所有人"
+        sortable
+        width="150"
+      >
+        <template slot-scope="scope">
+          {{ scope.row.sendAll | flagFilter }}
         </template>
       </el-table-column>
       <el-table-column

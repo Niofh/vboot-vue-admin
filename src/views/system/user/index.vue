@@ -91,6 +91,7 @@
       stripe
       style="width: 100%"
       @selection-change="handleSelectionChange"
+      @sort-change="handleSortChange"
     >
       <el-table-column
         type="selection"
@@ -101,7 +102,6 @@
         prop="avatar"
         label="头像"
         width="120"
-        sortable
       >
         <template slot-scope="scope">
           <a target="_blank" :href="scope.row.avatar">
@@ -116,14 +116,14 @@
         prop="username"
         label="姓名"
         width="150"
-        sortable
+        sortable="custom"
       />
       <el-table-column
         v-if="showField('nickName')"
         prop="nickName"
         label="昵称"
         width="150"
-        sortable
+        sortable="custom"
       />
 
       <el-table-column
@@ -131,7 +131,7 @@
         prop="mobile"
         label="手机"
         width="150"
-        sortable
+        sortable="custom"
       />
 
       <el-table-column
@@ -139,7 +139,7 @@
         prop="email"
         label="邮箱"
         width="150"
-        sortable
+        sortable="custom"
       />
 
       <el-table-column
@@ -147,7 +147,7 @@
         prop="sex"
         label="性别"
         width="150"
-        sortable
+        sortable="custom"
       >
         <template slot-scope="scope">
           {{ scope.row.sex | dictFilter(sexDictList) }}
@@ -158,7 +158,7 @@
         prop="status"
         label="用户状态"
         width="150"
-        sortable
+        sortable="custom"
       >
         <template slot-scope="scope">
           {{ scope.row.status | dictFilter(statusDictList) }}
@@ -170,14 +170,12 @@
         prop="description"
         label="备注"
         width="150"
-        sortable
       />
       <el-table-column
         v-if="showField('address')"
         prop="address"
         label="省市县地址"
         width="250"
-        sortable
       />
 
       <el-table-column
@@ -185,7 +183,6 @@
         prop="street"
         label="街道地址"
         width="250"
-        sortable
       />
 
       <el-table-column
@@ -193,7 +190,6 @@
         prop="createTime"
         label="创建时间"
         width="180"
-        sortable
       />
 
       <el-table-column
@@ -464,6 +460,18 @@ export default {
           this.page.total = res.result.total
         }
       })
+    },
+    // 排序
+    handleSortChange({ column, prop, order }) {
+      console.log({ column, prop, order })
+      if (order) {
+        this.page.sort = prop
+        this.page.order = order === 'ascending' ? 'asc' : 'desc'
+      } else {
+        this.page.sort = ''
+        this.page.order = ''
+      }
+      this.getDataList()
     },
     // 打开弹出框
     openModal(type) {

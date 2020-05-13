@@ -7,7 +7,9 @@ const tableMixin = {
       page: {
         pageSize: 10,
         pageIndex: 1,
-        total: 0
+        total: 0,
+        sort: '',
+        order: ''
       },
       dataList: [],
       searchForm: {},
