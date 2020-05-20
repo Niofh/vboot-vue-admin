@@ -21,6 +21,10 @@
     >
       <p>1、字段都要驼峰命名</p>
       <p><a href="https://www.cnblogs.com/-xlp/p/8617760.html" target="_blank">2、MYSQL中数据类型介绍</a></p>
+      <p>3、常用属性：
+        <b>JAVA:" String、Integer、Date、BigDecimal "。</b>
+        <b>MYSQL:" varchar(255)、tinyint、 datetime、decimal "</b>
+      </p>
     </el-alert>
     <el-table
       ref="table"
