@@ -237,7 +237,7 @@ export default {
     getDictAll() {
       getDictAll().then(res => {
         if (res.code === this.$code) {
-          this.dictAll = res.result
+          this.dictAll = res.data
         }
       })
     },
@@ -247,7 +247,7 @@ export default {
     getDataList() {
       getAllBaseByCodeId({ codeId: this.codeId }).then(res => {
         if (res.code === this.$code) {
-          this.dataList = res.result.map(item => {
+          this.dataList = res.data.map(item => {
             item.isEdit = false
             return item
           })

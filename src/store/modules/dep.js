@@ -32,7 +32,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getAllDepartmentApi().then(response => {
         if (response.code === 200) {
-          commit('SET_DEP_LIST', response.result)
+          commit('SET_DEP_LIST', response.data)
         }
         resolve(response)
       }).catch(error => {

@@ -302,8 +302,8 @@ export default {
       getDepartmentAllBaseApi().then(res => {
         this.dataListLoading = false
         if (res.code === this.$code) {
-          this.dataList = treeDeepUtil.fommatTree(res.result)
-          this.oldData = res.result
+          this.dataList = treeDeepUtil.fommatTree(res.data)
+          this.oldData = res.data
         }
       })
     },
@@ -317,7 +317,7 @@ export default {
     openEditModal(tableItem) {
       getDepartmentById(tableItem.id).then(res => {
         if (res.code === this.$code) {
-          this.form = res.result
+          this.form = res.data
           for (let i = 0; i < this.oldData.length; i++) {
             const item = this.oldData[i]
             if (item.id === this.form.parentId) {

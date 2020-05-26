@@ -17,6 +17,7 @@ export default {
     const vnodes = []
 
     if (icon) {
+      //  vnodes.push(<span class={icon + ' icon'}></span>)
       vnodes.push(<svg-icon icon-class={icon}/>)
     }
 
@@ -27,3 +28,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+
+    .icon{
+      margin-left: 10px;
+  }
+</style>

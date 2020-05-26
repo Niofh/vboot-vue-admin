@@ -342,8 +342,8 @@ export default {
       getRoleByPageApi(params).then(res => {
         this.dataListLoading = false
         if (res.code === this.$code) {
-          this.dataList = res.result.records
-          this.page.total = res.result.total
+          this.dataList = res.data.records
+          this.page.total = res.data.total
         }
       })
     },
@@ -357,7 +357,7 @@ export default {
     openEditModal(tableItem) {
       getRoleById(tableItem.id).then(res => {
         if (res.code === this.$code) {
-          this.form = res.result
+          this.form = res.data
         }
       })
       this.openModal(CommonEnum.UPDATE.id)
@@ -436,7 +436,7 @@ export default {
     getAllPermission() {
       getAllPermissionApi().then(res => {
         if (res.code === this.$code) {
-          this.permissionList = res.result
+          this.permissionList = res.data
         }
       })
     },
@@ -446,7 +446,7 @@ export default {
       this.roleId = item.id
       getPermission({ roleId: item.id }).then(res => {
         if (res.code === this.$code) {
-          this.permission = res.result
+          this.permission = res.data
           this.$refs.tree.setCheckedKeys(this.permission)
         }
       })

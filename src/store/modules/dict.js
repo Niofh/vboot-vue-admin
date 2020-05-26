@@ -40,9 +40,9 @@ const actions = {
         dictKey: 'sex'
       }).then(response => {
         if (response.code === 200) {
-          commit('SET_SEX_DICT_LIST', response.result)
+          commit('SET_SEX_DICT_LIST', response.data)
         }
-        resolve(response.result)
+        resolve(response.data)
       }).catch(() => {
         reject([])
       })
@@ -59,9 +59,9 @@ const actions = {
         dictKey: 'status'
       }).then(response => {
         if (response.code === 200) {
-          commit('SET_STATUS_DICT_LIST', response.result)
+          commit('SET_STATUS_DICT_LIST', response.data)
         }
-        resolve(response.result)
+        resolve(response.data)
       }).catch(() => {
         reject([])
       })
@@ -78,9 +78,9 @@ const actions = {
         dictKey: 'authority'
       }).then(response => {
         if (response.code === 200) {
-          commit('SET_AUTHORITY_DICT_LIST', response.result)
+          commit('SET_AUTHORITY_DICT_LIST', response.data)
         }
-        resolve(response.result)
+        resolve(response.data)
       }).catch(() => {
         reject([])
       })
@@ -97,9 +97,9 @@ const actions = {
         dictKey: 'msgType'
       }).then(response => {
         if (response.code === 200) {
-          commit('SET_MSGTYPE_DICT_LIST', response.result)
+          commit('SET_MSGTYPE_DICT_LIST', response.data)
         }
-        resolve(response.result)
+        resolve(response.data)
       }).catch(() => {
         reject([])
       })

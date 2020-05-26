@@ -214,8 +214,8 @@ export default {
       getCodeByPageApi(params).then(res => {
         this.dataListLoading = false
         if (res.code === this.$code) {
-          this.dataList = res.result.records
-          this.page.total = res.result.total
+          this.dataList = res.data.records
+          this.page.total = res.data.total
         }
       })
     },

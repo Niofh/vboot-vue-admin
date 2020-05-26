@@ -228,7 +228,7 @@ export default {
       getDictDetailByDictIdApi(params).then(res => {
         this.dataListLoading = false
         if (res.code === this.$code) {
-          this.dataList = res.result
+          this.dataList = res.data
         }
       })
     },
@@ -245,7 +245,7 @@ export default {
     openEditModal(tableItem) {
       getDictDetailById(tableItem.id).then(res => {
         if (res.code === this.$code) {
-          this.form = res.result
+          this.form = res.data
         }
       })
       this.openModal(CommonEnum.UPDATE.id)

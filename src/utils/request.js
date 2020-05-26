@@ -68,7 +68,7 @@ service.interceptors.response.use(
         })
       }
       Message({
-        message: res.message,
+        message: res.msg,
         type: 'error',
         duration: 5 * 1000
       })
@@ -116,7 +116,7 @@ service.interceptors.response.use(
           err.message = '接口异常，请联系管理员'
       }
       Message({
-        message: err.message,
+        message: err.msg,
         type: 'error',
         duration: 5 * 1000
       })
@@ -124,7 +124,7 @@ service.interceptors.response.use(
     if (err.message.indexOf('timeout') > -1) {
       err.message = '网络接口超时，请联系管理员'
       Message({
-        message: err.message,
+        message: err.msg,
         type: 'error',
         duration: 5 * 1000
       })

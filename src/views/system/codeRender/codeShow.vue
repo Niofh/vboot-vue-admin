@@ -78,7 +78,7 @@ export default {
     getCode() {
       showCode({ id: this.$route.params.codeId }).then(res => {
         if (res.code === this.$code) {
-          this.result = res.result
+          this.result = res.data
         }
       })
     },

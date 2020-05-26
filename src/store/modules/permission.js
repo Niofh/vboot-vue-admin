@@ -22,7 +22,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       findMenuAndPerByUsername({ username }).then(res => {
         if (res.code === 200) {
-          const menu = res.result.permissions
+          const menu = res.data.permissions
           const routers = arrayToTree(menu)
           commit('SET_ROUTES', routers)
           resolve(routers)

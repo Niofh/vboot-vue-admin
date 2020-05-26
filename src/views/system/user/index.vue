@@ -457,8 +457,8 @@ export default {
       getUserByPageApi(params).then(res => {
         this.dataListLoading = false
         if (res.code === this.$code) {
-          this.dataList = res.result.records
-          this.page.total = res.result.total
+          this.dataList = res.data.records
+          this.page.total = res.data.total
         }
       })
     },
@@ -472,9 +472,9 @@ export default {
     openEditModal(tableItem) {
       getUserById(tableItem.id).then(res => {
         if (res.code === this.$code) {
-          this.form = res.result
+          this.form = res.data
           this.form.password = ''
-          this.roleIds = res.result.roleIds
+          this.roleIds = res.data.roleIds
           if (this.form.departmentId) {
             // 设置部门名称
             let title
@@ -581,7 +581,7 @@ export default {
     getRoleAll() {
       getRoleAllBaseApi().then(res => {
         if (res.code === this.$code) {
-          this.roleList = res.result
+          this.roleList = res.data
         }
       })
     }

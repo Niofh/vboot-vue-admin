@@ -284,7 +284,7 @@ export default {
     getAllPermission() {
       getAllPermissionApi().then(res => {
         if (res.code === this.$code) {
-          this.data = res.result
+          this.data = res.data
         }
       })
     },
