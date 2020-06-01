@@ -3,16 +3,8 @@
  */
 class EmumBase {
   constructor(id, value) {
-    this._id = id
-    this._value = value
-  }
-
-  get id() {
-    return this._id
-  }
-
-  get value() {
-    return this._value
+    this.id = id
+    this.value = value
   }
 }
 
