@@ -51,7 +51,7 @@ function arrayToTree(menuList) {
   })
 
   menus.forEach(menu => {
-    router.push({
+    const json = {
       id: menu.id,
       parentId: menu.parentId,
       name: menu.name,
@@ -65,10 +65,15 @@ function arrayToTree(menuList) {
         noCache: !menu.nocache,
         permissions: perList.filter(item => item.parentId === menu.id)
       }
-    })
+    }
+    console.log(menu)
+    if (menu.parentId === '') {
+      json.alwaysShow = true // 如果为父，显示根路径
+    }
+    router.push(json)
   })
   var fommatTree = treeDeepUtil.fommatTree(router)
-  var concat = fommatTree.concat([{ path: '*', redirect: '/404', hidden: true }])
+  var concat = fommatTree.concat(asyncRoutes)
   console.log('【concat】', concat)
   return concat
 }
