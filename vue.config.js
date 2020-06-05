@@ -2,6 +2,7 @@
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+require('uglifyjs-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 function resolve(dir) {
   return path.join(__dirname, dir)
