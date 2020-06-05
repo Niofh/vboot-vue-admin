@@ -54,8 +54,11 @@ module.exports = {
   configureWebpack: (config) => { // 配置webpack
     config.name = name
     if (!isDev) {
+      console.log('进来了')
       // 清除console
       config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_debugger = true
+      config.optimization.minimizer[0].options.terserOptions.compress.pure_funcs = ['console.log']
 
       // 开启zip
       config.plugins.push(new CompressionWebpackPlugin({
