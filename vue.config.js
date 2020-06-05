@@ -1,13 +1,15 @@
 'use strict'
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
-
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+require('uglifyjs-webpack-plugin')
+const productionGzipExtensions = ['js', 'css']
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
 const name = defaultSettings.title || 'vue Element Admin' // page title
-
+const isDev = process.env.NODE_ENV === 'development'
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
@@ -49,19 +51,47 @@ module.exports = {
       }
     }
   },
-  configureWebpack: {
-    // provide the app's title in webpack's name field, so that
-    // it can be accessed in index.html to inject the correct title.
-    name: name,
-    resolve: {
-      alias: {
-        '@': resolve('src')
-      }
+  configureWebpack: (config) => { // 配置webpack
+    config.name = name
+    if (!isDev) {
+      console.log('进来了')
+      // 清除console
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_debugger = true
+      config.optimization.minimizer[0].options.terserOptions.compress.pure_funcs = ['console.log']
+
+      // 开启zip
+      config.plugins.push(new CompressionWebpackPlugin({
+        algorithm: 'gzip',
+        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+        threshold: 10240,
+        minRatio: 0.8
+      })
+      )
     }
+    // config.externals = {
+    //   BMap: 'BMap'
+    // }
+    /* config.module.rules.push(
+      {
+        test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf)$/i,
+        include: [resolve('src')],
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }
+        ]
+      }) */
   },
+
   chainWebpack(config) {
-    config.plugins.delete('preload') // TODO: need test
-    config.plugins.delete('prefetch') // TODO: need test
+    // 修复HMR
+    config.resolve.symlinks(true)
+    config.resolve.alias
+      .set('@', resolve('src'))
 
     // set svg-sprite-loader
     config.module
@@ -97,37 +127,24 @@ module.exports = {
           config
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
-            .use('script-ext-html-webpack-plugin', [{
+            .use('script-ext-html-webpack-plugin', [{ // 让 js 加载方式支持 Async 或 defer
               // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
-            .end()
-          config
-            .optimization.splitChunks({
-              chunks: 'all',
-              cacheGroups: {
-                libs: {
-                  name: 'chunk-libs',
-                  test: /[\\/]node_modules[\\/]/,
-                  priority: 10,
-                  chunks: 'initial' // only package third parties that are initially dependent
-                },
-                elementUI: {
-                  name: 'chunk-elementUI', // split elementUI into a single package
-                  priority: 20, // the weight needs to be larger than libs and app or it will be packaged into libs or app
-                  test: /[\\/]node_modules[\\/]_?element-ui(.*)/ // in order to adapt to cnpm
-                },
-                commons: {
-                  name: 'chunk-commons',
-                  test: resolve('src/components'), // can customize your rules
-                  minChunks: 3, //  minimum common number
-                  priority: 5,
-                  reuseExistingChunk: true
-                }
-              }
-            })
-          config.optimization.runtimeChunk('single')
         }
       )
+
+    if (!isDev) {
+      // 删除预加载
+      config.plugins.delete('preload')
+      config.plugins.delete('prefetch')
+
+      // 压缩代码
+      config.optimization.minimize(true)
+      // 分割代码
+      config.optimization.splitChunks({
+        chunks: 'all'
+      })
+    }
   }
 }

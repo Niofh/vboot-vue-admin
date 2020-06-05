@@ -23,7 +23,7 @@
       <p><a href="https://www.cnblogs.com/-xlp/p/8617760.html" target="_blank">2、MYSQL中数据类型介绍</a></p>
       <p>3、常用属性：
         <b>JAVA:" String、Integer、Date、BigDecimal "。</b>
-        <b>MYSQL:" varchar(255)、tinyint、 datetime、decimal "</b>
+        <b>MYSQL:" varchar(255)、int、tinyint、 datetime、decimal "</b>
       </p>
     </el-alert>
     <el-table
@@ -283,9 +283,7 @@ export default {
           // 修改数据
           codeDetailUpdateBaseApi(item).then(res => {
             if (res.code === this.$code) {
-              this.$message.success(res.message)
-            } else {
-              this.$message.error(res.message)
+              this.$message.success(res.msg)
             }
           })
         } else {
@@ -293,10 +291,10 @@ export default {
           item.codeId = this.codeId
           codeDetailSaveBaseApi(item).then(res => {
             if (res.code === this.$code) {
-              this.$message.success(res.message)
+              this.$message.success(res.msg)
               this.getDataList()
             } else {
-              this.$message.error(res.message)
+              this.$message.error(res.msg)
             }
           })
         }
@@ -325,7 +323,7 @@ export default {
             } else {
               this.$message({
                 type: 'error',
-                message: res.message
+                message: res.msg
               })
             }
           })
@@ -357,7 +355,7 @@ export default {
           } else {
             this.$message({
               type: 'error',
-              message: res.message
+              message: res.msg
             })
           }
         })

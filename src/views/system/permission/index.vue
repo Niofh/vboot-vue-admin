@@ -273,7 +273,7 @@ export default {
             } else {
               this.$message({
                 type: 'error',
-                message: res.message
+                message: res.msg
               })
             }
           })
@@ -315,10 +315,10 @@ export default {
         if (res.code === this.$code) {
           // 添加成功
           this.closeModal()
-          this.$message.success(res.message)
+          this.$message.success(res.msg)
           this.getAllPermission()
         } else {
-          this.$message.error(res.message)
+          this.$message.error(res.msg)
         }
       }).finally(() => {
         this.loading = false
@@ -333,9 +333,9 @@ export default {
           this.getAllPermission()
           this.closeModal()
 
-          this.$message.success(res.message)
+          this.$message.success(res.msg)
         } else {
-          this.$message.error(res.message)
+          this.$message.error(res.msg)
         }
       }).finally(() => {
         this.loading = false
