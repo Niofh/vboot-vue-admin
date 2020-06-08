@@ -197,8 +197,8 @@ module.exports = {
     const cdn = {
       css: [
         // element-ui css
-        // '//unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css'
-        '/static/element-ui.min.css'
+        '//unpkg.com/element-ui@2.13.2/lib/theme-chalk/index.css'
+        // '/static/element-ui.min.css'
       ],
       js: [
         // vue
@@ -214,8 +214,8 @@ module.exports = {
         // '//cdn.staticfile.org/axios/0.18.1/axios.min.js',
         '/static/axios.min.js',
         // element-ui js
-        // '//unpkg.com/element-ui@2.13.0/lib/index.js',
-        '/static/element-ui.min.js'
+        '//unpkg.com/element-ui@2.13.2/lib/index.js'
+        // '/static/element-ui.min.js'
       ]
     }
     config.plugin('html')
