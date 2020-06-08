@@ -153,8 +153,8 @@ module.exports = {
       .end()
 
     config
-      // https://webpack.js.org/configuration/devtool/#development
-      .when(process.env.NODE_ENV === 'development',
+      // https://webpack.js.org/configuration/devtool/#development 开发环境显示源码，方便调试
+      .when(isDev,
         config => config.devtool('cheap-source-map')
       )
       .end()
@@ -183,46 +183,46 @@ module.exports = {
       config.optimization.splitChunks({
         chunks: 'all'
       })
-    }
-    // 忽略字段
-    var externals = {
-      vue: 'Vue',
-      axios: 'axios',
-      'element-ui': 'ELEMENT',
-      'vue-router': 'VueRouter',
-      vuex: 'Vuex'
-    }
-    config.externals(externals)
+      // 忽略字段
+      var externals = {
+        vue: 'Vue',
+        axios: 'axios',
+        'element-ui': 'ELEMENT',
+        'vue-router': 'VueRouter',
+        vuex: 'Vuex'
+      }
+      config.externals(externals)
 
-    const cdn = {
-      css: [
+      const cdn = {
+        css: [
         // element-ui css
-        '//unpkg.com/element-ui@2.13.2/lib/theme-chalk/index.css'
+          '//unpkg.com/element-ui@2.13.2/lib/theme-chalk/index.css'
         // '/static/element-ui.min.css'
-      ],
-      js: [
+        ],
+        js: [
         // vue
         // '//cdn.staticfile.org/vue/2.6.10/vue.min.js',
-        '/static/vue.min.js',
-        // vue-router
-        // '//cdn.staticfile.org/vue-router/3.0.6/vue-router.min.js',
-        '/static/vue-router.min.js',
-        // vuex
-        // '//cdn.staticfile.org/vuex/3.1.0/vuex.min.js',
-        '/static/vuex.min.js',
-        // axios
-        // '//cdn.staticfile.org/axios/0.18.1/axios.min.js',
-        '/static/axios.min.js',
-        // element-ui js
-        '//unpkg.com/element-ui@2.13.2/lib/index.js'
+          '/static/vue.min.js',
+          // vue-router
+          // '//cdn.staticfile.org/vue-router/3.0.6/vue-router.min.js',
+          '/static/vue-router.min.js',
+          // vuex
+          // '//cdn.staticfile.org/vuex/3.1.0/vuex.min.js',
+          '/static/vuex.min.js',
+          // axios
+          // '//cdn.staticfile.org/axios/0.18.1/axios.min.js',
+          '/static/axios.min.js',
+          // element-ui js
+          '//unpkg.com/element-ui@2.13.2/lib/index.js'
         // '/static/element-ui.min.js'
-      ]
+        ]
+      }
+      config.plugin('html')
+        .tap(args => {
+          args[0].cdn = cdn
+          return args
+        })
     }
-    config.plugin('html')
-      .tap(args => {
-        args[0].cdn = cdn
-        return args
-      })
-      // #endregion
   }
+
 }
