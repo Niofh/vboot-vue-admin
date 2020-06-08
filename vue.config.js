@@ -2,6 +2,7 @@
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 require('uglifyjs-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 function resolve(dir) {
@@ -65,26 +66,56 @@ module.exports = {
         algorithm: 'gzip',
         test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
         threshold: 10240,
-        minRatio: 0.8
+        minRatio: 0.8,
+        cache: true
       })
       )
+
+      config.plugins.push(new CopyWebpackPlugin([
+        {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/node_modules/vue/dist/vue.min.js',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/vue.min.js'
+        },
+        {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/node_modules/vue-router/dist/vue-router.min.js',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/vue-router.min.js'
+        },
+        {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/node_modules/vuex/dist/vuex.min.js',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/vuex.min.js'
+        },
+        {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/node_modules/axios/dist/axios.min.js',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/axios.min.js'
+        },
+        /* {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/node_modules/babel-polyfill/dist/polyfill.min.js',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/babel-polyfill.min.js'
+        },*/
+        {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/node_modules/element-ui/lib/index.js',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/element-ui.min.js'
+        },
+        {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/node_modules/element-ui/lib/theme-chalk/index.css',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/element-ui.min.css'
+        }
+      ]))
     }
-    // config.externals = {
-    //   BMap: 'BMap'
-    // }
-    /* config.module.rules.push(
-      {
-        test: /\.(png|svg|jpg|gif|woff|woff2|eot|ttf)$/i,
-        include: [resolve('src')],
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192
-            }
-          }
-        ]
-      }) */
   },
 
   chainWebpack(config) {
@@ -122,6 +153,13 @@ module.exports = {
       .end()
 
     config
+      // https://webpack.js.org/configuration/devtool/#development
+      .when(process.env.NODE_ENV === 'development',
+        config => config.devtool('cheap-source-map')
+      )
+      .end()
+
+    config
       .when(process.env.NODE_ENV !== 'development',
         config => {
           config
@@ -133,7 +171,7 @@ module.exports = {
             }])
         }
       )
-
+      .end()
     if (!isDev) {
       // 删除预加载
       config.plugins.delete('preload')
@@ -146,5 +184,45 @@ module.exports = {
         chunks: 'all'
       })
     }
+    // 忽略字段
+    var externals = {
+      vue: 'Vue',
+      axios: 'axios',
+      'element-ui': 'ELEMENT',
+      'vue-router': 'VueRouter',
+      vuex: 'Vuex'
+    }
+    config.externals(externals)
+
+    const cdn = {
+      css: [
+        // element-ui css
+        // '//unpkg.com/element-ui@2.13.0/lib/theme-chalk/index.css'
+        '/static/element-ui.min.css'
+      ],
+      js: [
+        // vue
+        // '//cdn.staticfile.org/vue/2.6.10/vue.min.js',
+        '/static/vue.min.js',
+        // vue-router
+        // '//cdn.staticfile.org/vue-router/3.0.6/vue-router.min.js',
+        '/static/vue-router.min.js',
+        // vuex
+        // '//cdn.staticfile.org/vuex/3.1.0/vuex.min.js',
+        '/static/vuex.min.js',
+        // axios
+        // '//cdn.staticfile.org/axios/0.18.1/axios.min.js',
+        '/static/axios.min.js',
+        // element-ui js
+        // '//unpkg.com/element-ui@2.13.0/lib/index.js',
+        '/static/element-ui.min.js'
+      ]
+    }
+    config.plugin('html')
+      .tap(args => {
+        args[0].cdn = cdn
+        return args
+      })
+      // #endregion
   }
 }
