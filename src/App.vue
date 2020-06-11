@@ -6,7 +6,13 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  mounted() {
+    if (process.env.NODE_ENV === 'production') {
+      // 隐藏加载页面
+      document.getElementById('my-page-load').style.display = 'none'
+    }
+  }
 }
 </script>
 
