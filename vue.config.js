@@ -113,6 +113,12 @@ module.exports = {
           from: __dirname + '/node_modules/element-ui/lib/theme-chalk/index.css',
           // eslint-disable-next-line no-path-concat
           to: __dirname + '/dist/static/element-ui.min.css'
+        },
+        {
+          // eslint-disable-next-line no-path-concat
+          from: __dirname + '/src/assets/pageLoading/loading.css',
+          // eslint-disable-next-line no-path-concat
+          to: __dirname + '/dist/static/loading.css'
         }
       ]))
     }
@@ -195,7 +201,8 @@ module.exports = {
 
       const cdn = {
         css: [
-        // element-ui css
+          '/static/loading.css',
+          // element-ui css
           '//unpkg.com/element-ui@2.13.2/lib/theme-chalk/index.css'
         // '/static/element-ui.min.css'
         ],

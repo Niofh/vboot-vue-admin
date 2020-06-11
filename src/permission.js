@@ -69,4 +69,8 @@ router.beforeEach(async(to, from, next) => {
 router.afterEach(() => {
   // finish progress bar
   NProgress.done()
+  if (process.env.NODE_ENV === 'production') {
+    // 隐藏加载页面
+    document.getElementById('my-page-load').style.display = 'none'
+  }
 })
