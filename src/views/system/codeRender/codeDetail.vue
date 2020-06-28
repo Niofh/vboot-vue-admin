@@ -271,7 +271,7 @@ export default {
         search: '',
         dictKey: '',
         num: 1,
-        isEdit: false
+        isEdit: true
       }
       this.dataList.unshift(item)
     },
