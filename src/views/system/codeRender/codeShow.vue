@@ -27,6 +27,10 @@
         {{ name }}.vue
         <pre v-highlightjs="result.tableJZZ"><code class="javascript" /></pre>
       </el-tab-pane>
+      <el-tab-pane label="apiJZZ.vue" name="apiJZZ">
+        {{ name }}.vue
+        <pre v-highlightjs="result.apiJZZ"><code class="javascript" /></pre>
+      </el-tab-pane>
       <el-tab-pane label="vuexDict.js" name="vuexDict">
         <el-alert type="error" effect="dark">字典类型需要单独复制粘贴到store/dict.js，不能直接复制文件到代码上</el-alert>
         <div>{{ name }}Dict.js</div>
