@@ -7,6 +7,7 @@ const FormEnum = {
   'DATE': new EmumBase(4, '日期框'),
   'RADIO': new EmumBase(5, '单选框'),
   'CHECKBOX': new EmumBase(6, '多选框'),
-  'INPUTNUMBER ': new EmumBase(7, '计数器')
+  'INPUTNUMBER': new EmumBase(7, '计数器'),
+  'UPLOAD': new EmumBase(8, '上传')
 }
 export default FormEnum
