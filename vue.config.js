@@ -203,7 +203,7 @@ module.exports = {
         css: [
           '/static/loading.css',
           // element-ui css
-          '//unpkg.com/element-ui@2.13.2/lib/theme-chalk/index.css'
+          'https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/theme-chalk/index.css'
         // '/static/element-ui.min.css'
         ],
         js: [
@@ -220,7 +220,7 @@ module.exports = {
           // '//cdn.staticfile.org/axios/0.18.1/axios.min.js',
           '/static/axios.min.js',
           // element-ui js
-          '//unpkg.com/element-ui@2.13.2/lib/index.js'
+          'https://cdn.bootcdn.net/ajax/libs/element-ui/2.13.2/index.js'
         // '/static/element-ui.min.js'
         ]
       }
