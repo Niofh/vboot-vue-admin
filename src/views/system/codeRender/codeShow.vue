@@ -7,6 +7,10 @@
 
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
+      <el-tab-pane label="antd" name="antd">
+        {{ name }}.js
+        <pre v-highlightjs="result.antd"><code class="javascript" /></pre>
+      </el-tab-pane>
       <el-tab-pane label="api" name="api">
         {{ name }}.js
         <pre v-highlightjs="result.api"><code class="javascript" /></pre>
