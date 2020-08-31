@@ -7,7 +7,7 @@
 
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
-      <el-tab-pane label="antd" name="antd">
+      <el-tab-pane label="tableAntd" name="tableAntd">
         {{ name }}.js
         <pre v-highlightjs="result.antd"><code class="javascript" /></pre>
       </el-tab-pane>
