@@ -1,10 +1,19 @@
 <template>
-  <div class="app-container">
+  <div class="app-container code-show">
     <el-page-header content="预览代码" @back="goBack" />
     <div class="btns-wrap">
-      <el-button class="btn-default" size="small" icon="el-icon-refresh-left" @click="handleRefresh">刷新</el-button>
-      <el-button v-clipboard:copy="inputData" v-clipboard:success="clipboardSuccess" type="primary" size="small">复制代码</el-button>
-
+      <el-button
+        class="btn-default"
+        size="small"
+        icon="el-icon-refresh-left"
+        @click="handleRefresh"
+      >刷新</el-button>
+      <el-button
+        v-clipboard:copy="inputData"
+        v-clipboard:success="clipboardSuccess"
+        type="primary"
+        size="small"
+      >复制代码</el-button>
     </div>
     <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick">
       <el-tab-pane label="tableAntd" name="tableAntd">
@@ -92,11 +101,10 @@ export default {
       this.$router.back()
     },
     handleClick(tab, event) {
-      console.log(this.result[tab.name])
       this.inputData = this.result[tab.name]
     },
     getCode() {
-      showCode({ id: this.$route.params.codeId }).then(res => {
+      showCode({ id: this.$route.params.codeId }).then((res) => {
         if (res.code === this.$code) {
           this.result = res.data
         }
@@ -117,6 +125,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss">
+.code-show {
+  .el-tab-pane {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
 </style>

@@ -105,3 +105,13 @@ export function param2Obj(url) {
       '"}'
   )
 }
+
+// js序列化url地址
+export function param(data) {
+  let url = ''
+  for (const k in data) {
+    const value = data[k] !== undefined ? data[k] : ''
+    url += `&${k}=${encodeURIComponent(value)}`
+  }
+  return url ? url.substring(1) : ''
+}
