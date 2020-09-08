@@ -15,7 +15,7 @@ import '@/permission' // permission control
 import permission from '@/directive/permission'
 
 import VueHighlightJS from 'vue-highlightjs'
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github-gist.css'
 
 import Clipboard from '@/directive/clipboard'
 import './filter'
