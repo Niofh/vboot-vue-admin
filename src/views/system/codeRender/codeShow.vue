@@ -28,6 +28,12 @@
         {{ name }}.vue
         <pre v-highlightjs="result.table"><code class="javascript" /></pre>
       </el-tab-pane>
+
+      <el-tab-pane label="tableDEKF.vue" name="tableDEKF">
+        {{ name }}.vue
+        <pre v-highlightjs="result.tableDEKF"><code class="javascript" /></pre>
+      </el-tab-pane>
+
       <el-tab-pane label="apiGuYuan" name="apiGuYuan">
         {{ name }}.js
         <pre v-highlightjs="result.apiGuYuan"><code class="javascript" /></pre>
