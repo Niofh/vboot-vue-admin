@@ -20,6 +20,7 @@
         {{ name }}.js
         <pre v-highlightjs="result.tableAntd"><code class="javascript" /></pre>
       </el-tab-pane>
+
       <el-tab-pane label="api" name="api">
         {{ name }}.js
         <pre v-highlightjs="result.api"><code class="javascript" /></pre>
