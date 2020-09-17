@@ -30,7 +30,7 @@
         <pre v-highlightjs="result.table"><code class="javascript" /></pre>
       </el-tab-pane>
 
-      <el-tab-pane label="tableDEKF.vue" name="tableDEKF">
+      <el-tab-pane label="tableDEKF" name="tableDEKF">
         {{ name }}.vue
         <pre v-highlightjs="result.tableDEKF"><code class="javascript" /></pre>
       </el-tab-pane>
@@ -51,7 +51,7 @@
         {{ name }}.vue
         <pre v-highlightjs="result.apiJZZ"><code class="javascript" /></pre>
       </el-tab-pane>
-      <el-tab-pane label="vuexDict.js" name="vuexDict">
+      <!-- <el-tab-pane label="vuexDict.js" name="vuexDict">
         <el-alert type="error" effect="dark">字典类型需要单独复制粘贴到store/dict.js，不能直接复制文件到代码上</el-alert>
         <div>{{ name }}Dict.js</div>
         <pre v-highlightjs="result.vuexDict"><code class="javascript" /></pre>
@@ -75,7 +75,7 @@
       <el-tab-pane label="mapper" name="mapper">
         {{ Name }}Mapper.java
         <pre v-highlightjs="result.mapper"><code class="java" /></pre>
-      </el-tab-pane>
+      </el-tab-pane> -->
       <el-tab-pane label="mysql" name="mysql">
         t_{{ name }}.sql
         <pre v-highlightjs="result.mysql"><code class="sql" /></pre>
