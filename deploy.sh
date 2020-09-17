@@ -35,5 +35,5 @@ rm -rf usr/local/java/nginx-vboot/www/*
 
 
 echo "============复制dist下的文件到/usr/local/java/nginx-vboot下的www文件============="
-cp -r /usr/local/java/vboot/vboot-vue-admin/dist/.  /usr/local/java/nginx-vboot/www
+cp -r /usr/local/java/vboot/vboot-vue-admin/dist/  /usr/local/java/nginx-vboot/www
 
