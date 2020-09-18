@@ -4,6 +4,10 @@
       <el-form-item label="表名" prop="tableName">
         <el-input v-model="searchForm.tableName" clearable placeholder="表名" />
       </el-form-item>
+
+      <el-form-item label="备注" prop="description">
+        <el-input v-model="searchForm.description" clearable placeholder="备注" />
+      </el-form-item>
       <el-form-item>
         <el-button icon="el-icon-search" type="primary" @click="handleSearch">查询</el-button>
         <el-button icon="el-icon-refresh-right" type="success" @click="handleResetFrom">重置</el-button>
@@ -157,7 +161,8 @@ export default {
   data() {
     return {
       searchForm: {
-        tableName: ''
+        tableName: '',
+        description: ''
       },
       checkFieldList: [], // 选中的字段
       multipleSelection: [],
