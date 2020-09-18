@@ -51,6 +51,16 @@
         {{ name }}.vue
         <pre v-highlightjs="result.apiJZZ"><code class="javascript" /></pre>
       </el-tab-pane>
+
+      <el-tab-pane label="enumjs" name="enumjs">
+        {{ name }}.js
+        <pre v-highlightjs="result.enumjs"><code class="javascript" /></pre>
+      </el-tab-pane>
+
+      <el-tab-pane label="enumjava" name="enumjava">
+        {{ name }}.java
+        <pre v-highlightjs="result.enumjava"><code class="java" /></pre>
+      </el-tab-pane>
       <!-- <el-tab-pane label="vuexDict.js" name="vuexDict">
         <el-alert type="error" effect="dark">字典类型需要单独复制粘贴到store/dict.js，不能直接复制文件到代码上</el-alert>
         <div>{{ name }}Dict.js</div>

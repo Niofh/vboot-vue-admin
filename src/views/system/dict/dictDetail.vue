@@ -80,6 +80,11 @@
         prop="code"
         label="字典值"
       />
+
+      <el-table-column
+        prop="enKey"
+        label="字典值key"
+      />
       <el-table-column
         v-if="showField('sort')"
         prop="sort"
@@ -112,14 +117,19 @@
         <el-row :gutter="5">
           <el-form-item v-show="false" prop="id" label="id" />
           <el-col :span="12" style="height: 51px;margin-bottom: 0px;">
-            <el-form-item label="字典名称" prop="name">
+            <el-form-item label="字典详情名称" prop="name">
               <el-input v-model="form.name" autocomplete="off" />
             </el-form-item>
           </el-col>
 
           <el-col :span="12" style="height: 51px;margin-bottom: 0px;">
-            <el-form-item label="字典值" prop="code">
+            <el-form-item label="字典详情值" prop="code">
               <el-input v-model="form.code" autocomplete="off" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12" style="height: 51px;margin-bottom: 0px;">
+            <el-form-item label="字典详情key" prop="enKey">
+              <el-input v-model="form.enKey" autocomplete="off" />
             </el-form-item>
           </el-col>
 
@@ -177,6 +187,7 @@ export default {
         dictId: '',
         name: '',
         code: '',
+        enKey: '',
         sort: ''
       },
       rules: {
@@ -184,6 +195,9 @@ export default {
           { required: true, message: '这是必填项', trigger: 'blur' }
         ],
         code: [
+          { required: true, message: '这是必填项', trigger: 'blur' }
+        ],
+        enKey: [
           { required: true, message: '这是必填项', trigger: 'blur' }
         ]
       },

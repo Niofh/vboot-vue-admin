@@ -163,9 +163,9 @@
         width="180"
       >
         <template slot-scope="scope">
-          <el-select v-model="scope.row.dictKey" :disabled="!scope.row.isEdit" size="mini">
+          <el-select v-model="scope.row.dictId" :disabled="!scope.row.isEdit" size="mini">
             <el-option value="" label="请选择" />
-            <el-option v-for="dict in dictAll" :key="dict.id" :label="dict.dictName" :value="dict.dictKey" />
+            <el-option v-for="dict in dictAll" :key="dict.id" :label="dict.dictName" :value="dict.id" />
           </el-select>
         </template>
       </el-table-column>
